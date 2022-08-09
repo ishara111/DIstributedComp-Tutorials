@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tutorial1
 {
-    public class Class1
+    internal class DataStruct
     {
     }
 }
