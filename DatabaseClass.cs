@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tutorial1
+namespace DatabaseLib
 {
     public class DatabaseClass
     {
@@ -13,7 +13,7 @@ namespace Tutorial1
         DatabaseGen dbGen;
         public DatabaseClass()
         {
-            dataStruct = new List<Tutorial1.DataStruct>();
+            dataStruct = new List<DatabaseLib.DataStruct>();
             data = new DataStruct();
             dbGen = new DatabaseGen();
             addData();
