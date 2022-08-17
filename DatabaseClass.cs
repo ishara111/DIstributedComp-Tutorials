@@ -14,7 +14,7 @@ namespace DatabaseLib
         public DatabaseClass()
         {
             dataStruct = new List<DatabaseLib.DataStruct>();
-            data = new DataStruct();
+            
             dbGen = new DatabaseGen();
             addData();
         }
@@ -22,29 +22,30 @@ namespace DatabaseLib
         {
             for (int i = 0; i < 20; i++)
             {
+                data = new DataStruct();
                 dbGen.GetNextAccount(out data.pin, out data.acctNo, out data.firstName, out data.lastName, out data.balance);
                 dataStruct.Add(data);
             }
         }
         public uint GetAcctNoByIndex(int index)
         {
-            return dataStruct[index].acctNo;
+            return dataStruct[index-1].acctNo;
         }
         public uint GetPINByIndex(int index)
         {
-            return dataStruct[index].pin;
+            return dataStruct[index-1].pin;
         }
         public string GetFirstNameByIndex(int index)
         {
-            return dataStruct[index].firstName;
+            return dataStruct[index-1].firstName;
         }
         public string GetLastNameByIndex(int index)
         {
-            return dataStruct[index].lastName;
+            return dataStruct[index-1].lastName;
         }
         public int GetBalanceByIndex(int index)
         {
-            return dataStruct[index].balance;
+            return dataStruct[index-1].balance;
         }
         public int GetNumRecords()
         {
