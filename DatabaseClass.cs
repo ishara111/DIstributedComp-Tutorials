@@ -9,24 +9,27 @@ namespace DatabaseLib
     public class DatabaseClass
     {
         List<DataStruct> dataStruct;
-        DataStruct data;
-        DatabaseGen dbGen;
+        //DataStruct data;
+        //DatabaseGen dbGen;
         public DatabaseClass()
         {
             dataStruct = new List<DatabaseLib.DataStruct>();
             
-            dbGen = new DatabaseGen();
+            
             addData();
         }
         private void addData()
         {
+
             for (int i = 0; i < 20; i++)
             {
-                data = new DataStruct();
+                DataStruct data = new DataStruct();
+                DatabaseGen dbGen = new DatabaseGen();
                 dbGen.GetNextAccount(out data.pin, out data.acctNo, out data.firstName, out data.lastName, out data.balance);
                 dataStruct.Add(data);
             }
         }
+
         public uint GetAcctNoByIndex(int index)
         {
             return dataStruct[index-1].acctNo;

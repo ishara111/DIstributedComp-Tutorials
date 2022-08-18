@@ -8,11 +8,12 @@ namespace DatabaseLib
 {
     internal class DatabaseGen
     {
+        private static Random rnd = new Random();
         private string GetFirstname()
         {
             string firstName;
             string[] fNames = { "John", "Jake", "Vincent", "Troy", "Paul", "Tom", "Jerry", "Harry", "Simon" };
-            Random rnd = new Random();
+            //Random rnd = new Random();
             int index = rnd.Next(fNames.Length);
             firstName = fNames[index];
             return firstName;
@@ -22,7 +23,7 @@ namespace DatabaseLib
         {
             string lastName;
             string[] lNames = { "Holand", "Wesley", "Smith", "Johnson", "Williams", "brown", "Miller" };
-            Random rnd = new Random();
+            //Random rnd = new Random();
             int index = rnd.Next(lNames.Length);
             lastName = lNames[index];
             return lastName;
@@ -31,7 +32,7 @@ namespace DatabaseLib
         private uint GetPIN()
         {
             uint pin;
-            Random rnd = new Random();
+            //Random rnd = new Random();
             pin = (uint)rnd.Next(1000, 9999);
             return pin;
         }
@@ -39,7 +40,7 @@ namespace DatabaseLib
         private uint GetAcctNo()
         {
             uint acctNo;
-            Random rnd = new Random();
+            //Random rnd = new Random();
             acctNo = (uint)rnd.Next(100000000, 999999999);
             return acctNo;
         }
@@ -47,7 +48,7 @@ namespace DatabaseLib
         private int GetBalance()
         {
             int balance;
-            Random rnd = new Random();
+           //Random rnd = new Random();
             balance = rnd.Next(0, 2000);
             return balance;
         }
