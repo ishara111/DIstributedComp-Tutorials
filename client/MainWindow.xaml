@@ -15,6 +15,7 @@
         <TextBlock x:Name="text" HorizontalAlignment="Left" Margin="144,314,0,0" TextWrapping="Wrap" Text="Enter index number to search" VerticalAlignment="Top" Width="124" Height="35"/>
         <Button x:Name="sButton" Content="Search" HorizontalAlignment="Left" Margin="460,317,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="sButton_Click"/>
         <TextBox x:Name="indexBox" HorizontalAlignment="Left" Margin="280,318,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="62" Height="24"/>
+        <Image x:Name="imageBox" HorizontalAlignment="Left" Height="65" Margin="101,25,0,0" VerticalAlignment="Top" Width="72"/>
 
     </Grid>
 </Window>

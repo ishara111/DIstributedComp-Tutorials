@@ -25,8 +25,9 @@ namespace DatabaseLib
             {
                 DataStruct data = new DataStruct();
                 DatabaseGen dbGen = new DatabaseGen();
-                dbGen.GetNextAccount(out data.pin, out data.acctNo, out data.firstName, out data.lastName, out data.balance);
+                dbGen.GetNextAccount(out data.pin, out data.acctNo, out data.firstName, out data.lastName, out data.balance, out data.image);
                 dataStruct.Add(data);
+                //Console.WriteLine(data.image);
             }
         }
 
@@ -49,6 +50,10 @@ namespace DatabaseLib
         public int GetBalanceByIndex(int index)
         {
             return dataStruct[index-1].balance;
+        }
+        public string GetProfileImage(int index)
+        {
+            return dataStruct[index - 1].image;
         }
         public int GetNumRecords()
         {

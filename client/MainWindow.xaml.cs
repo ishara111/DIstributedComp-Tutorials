@@ -51,19 +51,20 @@ namespace client
                 //Console.WriteLine(int.TryParse(index.ToString(), out res));
                 if ((index > 0) && (index <= foob.GetNumEntries()))
                 {
-                    string fName = "", lName = "";
+                    string fName = "", lName = "", image = "";
                     int bal = 0;
                     uint acct = 0, pin = 0;
                     //On click, Get the index....
                     //index = Int32.Parse(indexBox.Text);
                     //Then, run our RPC function, using the out mode parameters...
-                    foob.GetValuesForEntry(index, out acct, out pin, out bal, out fName, out lName);
+                    foob.GetValuesForEntry(index, out acct, out pin, out bal, out fName, out lName, out image);
                     //And now, set the values in the GUI!
                     fNameBox.Text = fName;
                     lNameBox.Text = lName;
                     balanceBox.Text = bal.ToString("C");
                     accNoBox.Text = acct.ToString();
                     pinBox.Text = pin.ToString("D4");
+                    imageBox.Source = new BitmapImage(new Uri(image));
                 }
                 else
                 {

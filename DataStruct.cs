@@ -13,6 +13,7 @@ namespace DatabaseLib
         public int balance;
         public string firstName;
         public string lastName;
+        public string image;
         public DataStruct()
         {
             acctNo = 0;
@@ -20,6 +21,7 @@ namespace DatabaseLib
             balance = 0;
             firstName = "";
             lastName = "";
+            image = "";
         }
     }
 }

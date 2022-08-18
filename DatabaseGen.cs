@@ -53,13 +53,23 @@ namespace DatabaseLib
             return balance;
         }
 
-        public void GetNextAccount(out uint pin, out uint acctNo, out string firstName, out string lastName, out int balance)
+        private string GetImage()
+        {
+            string image;
+            int id;
+            id = rnd.Next(151, 300);
+            image = "https://picsum.photos/id/" + id.ToString() + "/200/200";
+            return image;
+        }
+
+        public void GetNextAccount(out uint pin, out uint acctNo, out string firstName, out string lastName, out int balance, out string image)
         {
             pin = GetPIN();
             acctNo = GetAcctNo();
             firstName = GetFirstname();
             lastName = GetLastname();
             balance = GetBalance();
+            image = GetImage();
         }
     }
 }
