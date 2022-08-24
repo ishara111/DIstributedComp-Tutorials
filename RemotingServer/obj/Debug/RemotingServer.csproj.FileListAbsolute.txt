@@ -1,0 +1,11 @@
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\bin\Debug\RemotingServer.exe.config
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\bin\Debug\RemotingServer.exe
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\bin\Debug\RemotingServer.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\bin\Debug\DatabaseLib.dll
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\bin\Debug\DatabaseLib.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\obj\Debug\RemotingServer.csproj.AssemblyReference.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\obj\Debug\RemotingServer.csproj.SuggestedBindingRedirects.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\obj\Debug\RemotingServer.csproj.CoreCompileInputs.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\obj\Debug\RemotingServer.csproj.CopyComplete
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\obj\Debug\RemotingServer.exe
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\RemotingServer\obj\Debug\RemotingServer.pdb

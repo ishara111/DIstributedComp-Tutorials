@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RemotingServer;
+//using RemotingServer;
+using BusinessTier;
 
 namespace client
 {
@@ -22,15 +24,15 @@ namespace client
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ServerInterface foob;
+        private BusinessServerInterface foob;
         public MainWindow()
         {
             InitializeComponent();
-            ChannelFactory<RemotingServer.ServerInterface> foobFactory;
+            ChannelFactory<BusinessServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
             //Set the URL and create the connection!
-            string URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
+            string URL = "net.tcp://localhost:8200/BusinessService";
+            foobFactory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
             //Also, tell me how many entries are in the DB.
             indexBox.Text = foob.GetNumEntries().ToString();
@@ -70,6 +72,33 @@ namespace client
                 {
                     indexBox.Text = "incorrect";
                 }
+            }
+        }
+
+        private void nameSearch_button_Click(object sender, RoutedEventArgs e)
+        {
+            int res;
+            Regex rgx = new Regex("[^A-Za-z0-9]");
+            if ((name_search.Text.Equals("")) || ((!int.TryParse(name_search.Text, out res)) && !(rgx.IsMatch(name_search.Text))))
+            {
+                foob.GetValuesForSearch(name_search.Text, out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image);
+                if (!fName.Equals(""))
+                {
+                    fNameBox.Text = fName;
+                    lNameBox.Text = lName;
+                    balanceBox.Text = bal.ToString("C");
+                    accNoBox.Text = acctNo.ToString();
+                    pinBox.Text = pin.ToString("D4");
+                    imageBox.Source = new BitmapImage(new Uri(image));
+                }
+                else
+                {
+                    name_search.Text = "not found";
+                }
+            }
+            else
+            {
+                name_search.Text = "incorrect";
             }
         }
     }

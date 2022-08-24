@@ -1,0 +1,14 @@
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\BusinessTier.exe.config
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\BusinessTier.exe
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\BusinessTier.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\RemotingServer.exe
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\DatabaseLib.dll
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\RemotingServer.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\RemotingServer.exe.config
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\bin\Debug\DatabaseLib.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\obj\Debug\BusinessTier.csproj.AssemblyReference.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\obj\Debug\BusinessTier.csproj.SuggestedBindingRedirects.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\obj\Debug\BusinessTier.csproj.CoreCompileInputs.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\obj\Debug\BusinessTier.csproj.CopyComplete
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\obj\Debug\BusinessTier.exe
+D:\VISUAL STUDIO INSTALL\projects\Tutorial2\BusinessTier\obj\Debug\BusinessTier.pdb

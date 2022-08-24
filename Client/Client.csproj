@@ -96,9 +96,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RemotingServer\RemotingServer.csproj">
-      <Project>{cf9f56e5-f75f-4f06-bf6e-f71226b3ccc8}</Project>
-      <Name>RemotingServer</Name>
+    <ProjectReference Include="..\BusinessTier\BusinessTier.csproj">
+      <Project>{445a6122-8dde-47cb-affb-3687d48ae74e}</Project>
+      <Name>BusinessTier</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
