@@ -95,16 +95,16 @@ namespace client
             searchval = name_search.Text;
             notFound = false;
             int res;
-            name_search.IsReadOnly = true;
-            indexBox.IsReadOnly = true;
-            sButton.IsEnabled = false;
-            nameSearch_button.IsEnabled = false;
-            progress_bar.IsIndeterminate = true;
             Regex rgx = new Regex("[^A-Za-z0-9]");
             if (!String.IsNullOrEmpty(name_search.Text))
             {
                 if ((!int.TryParse(name_search.Text, out res)) && !(rgx.IsMatch(name_search.Text)))
                 {
+                    name_search.IsReadOnly = true;
+                    indexBox.IsReadOnly = true;
+                    sButton.IsEnabled = false;
+                    nameSearch_button.IsEnabled = false;
+                    progress_bar.IsIndeterminate = true;
                     Search search;
                     AsyncCallback searchCallback;
                     MainWindow mw = new MainWindow();
