@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -14,6 +15,7 @@ namespace BusinessTier
     internal class BusinessServer : BusinessServerInterface
     {
         private ServerInterface foob;
+        private static uint logNumber;
         //DatabaseClass db;
         public BusinessServer()
         {
@@ -23,13 +25,17 @@ namespace BusinessTier
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
+            BusinessServer.logNumber = 0;
 
 
             //db = new DatabaseClass();
         }
-        public int GetNumEntries()
+        public int GetNumEntries() 
         {
             //return db.GetNumRecords();
+            BusinessServer.logNumber++;
+            Log("numberofentries");
+
 
             return foob.GetNumEntries();
         }
@@ -41,12 +47,16 @@ namespace BusinessTier
             //fName = db.GetFirstNameByIndex(index);
             //lName = db.GetLastNameByIndex(index);
             //image = db.GetProfileImage(index);
+            BusinessServer.logNumber++;
+            Log("getvaluesforentry" + index);
 
             foob.GetValuesForEntry(index, out acctNo, out pin, out bal, out fName, out lName, out image);
         }
 
         public void GetValuesForSearch(string searchText, out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image)
         {
+            BusinessServer.logNumber++;
+            Log("getvaluesforsearch" + searchText);
             acctNo = 0;
             pin = 0;
             bal = 0;
@@ -74,6 +84,12 @@ namespace BusinessTier
                 }
             }
             Thread.Sleep(1000);
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private void Log(string logString)
+        {
+            Console.WriteLine("Log String: "+logString+"  Loggable Tasks Performed: "+logNumber);
         }
     }
 }

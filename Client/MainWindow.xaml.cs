@@ -182,14 +182,4 @@ namespace client
         }
 
     }
-
-
-
-
-        //private void SearchForName(string name, out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image)
-        //{
-        //    foob.GetValuesForSearch(name, out acctNo, out pin, out bal, out fName, out lName, out image);
-        //}
-
-
 }
