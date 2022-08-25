@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,15 +19,27 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 //using RemotingServer;
 using BusinessTier;
+using Client;
 
 namespace client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    public delegate void Search(string name, out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image);
     public partial class MainWindow : Window
     {
+        private Data data;
         private BusinessServerInterface foob;
+        private string searchval;
+        private bool notFound;
+        //private uint acctNo = 0;
+        //private uint pin = 0;
+        //private int bal = 0;
+        //private string fName = "";
+        //private string lName = "";
+        //private string image = "";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -77,29 +92,104 @@ namespace client
 
         private void nameSearch_button_Click(object sender, RoutedEventArgs e)
         {
+            searchval = name_search.Text;
+            notFound = false;
             int res;
+            name_search.IsReadOnly = true;
+            indexBox.IsReadOnly = true;
+            sButton.IsEnabled = false;
+            nameSearch_button.IsEnabled = false;
+            progress_bar.IsIndeterminate = true;
             Regex rgx = new Regex("[^A-Za-z0-9]");
-            if ((name_search.Text.Equals("")) || ((!int.TryParse(name_search.Text, out res)) && !(rgx.IsMatch(name_search.Text))))
+            if (!String.IsNullOrEmpty(name_search.Text))
             {
-                foob.GetValuesForSearch(name_search.Text, out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image);
-                if (!fName.Equals(""))
+                if ((!int.TryParse(name_search.Text, out res)) && !(rgx.IsMatch(name_search.Text)))
                 {
-                    fNameBox.Text = fName;
-                    lNameBox.Text = lName;
-                    balanceBox.Text = bal.ToString("C");
-                    accNoBox.Text = acctNo.ToString();
-                    pinBox.Text = pin.ToString("D4");
-                    imageBox.Source = new BitmapImage(new Uri(image));
+                    Search search;
+                    AsyncCallback searchCallback;
+                    MainWindow mw = new MainWindow();
+                    search = mw.foob.GetValuesForSearch;
+                    searchCallback = this.OnSearchCompletion;
+                    search.BeginInvoke(searchval, out uint ac, out uint p, out int b, out string f, out string l, out string i, searchCallback, null);
+
+                    if (notFound == true)
+                    {
+                        name_search.Text = "not found";
+                    }
+                    else
+                    {
+                        Update();
+                    }
+
+                    progress_bar.IsIndeterminate = false;
+                    name_search.IsReadOnly = false;
+                    indexBox.IsReadOnly = false;
+                    sButton.IsEnabled = true;
+                    nameSearch_button.IsEnabled = true;
                 }
                 else
                 {
-                    name_search.Text = "not found";
+                    name_search.Text = "incorrect";
                 }
             }
             else
             {
                 name_search.Text = "incorrect";
             }
+
+
         }
+
+        private void OnSearchCompletion(IAsyncResult asyncResult)
+        {
+            data = new Data();
+
+            Search search;
+            AsyncResult asyncobj = (AsyncResult)asyncResult;
+
+            if (asyncobj.EndInvokeCalled == false)
+            {
+                search = (Search)asyncobj.AsyncDelegate;
+                search.EndInvoke(out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image, asyncobj);
+
+                if (!fName.Equals(""))
+                {
+                    data.fname = fName;
+                    data.lname = lName;
+                    data.bal = bal.ToString("C");
+                    data.acc = acctNo.ToString();
+                    data.pin = pin.ToString("D4");
+                    data.img = image;
+                }
+                else
+                {
+                    notFound = true;
+                }
+
+
+            }
+            asyncobj.AsyncWaitHandle.Close();
+        }
+
+        private void Update()
+        {
+            fNameBox.Text = data.fname;
+            lNameBox.Text = data.lname;
+            balanceBox.Text = data.bal;
+            accNoBox.Text = data.acc;
+            pinBox.Text = data.pin;
+            imageBox.Source = new BitmapImage(new Uri(data.img));
+        }
+
     }
+
+
+
+
+        //private void SearchForName(string name, out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image)
+        //{
+        //    foob.GetValuesForSearch(name, out acctNo, out pin, out bal, out fName, out lName, out image);
+        //}
+
+
 }

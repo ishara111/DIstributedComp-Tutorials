@@ -62,7 +62,7 @@ namespace BusinessTier
                 string lastName = "";
                 string img = "";
                 foob.GetValuesForEntry(i,out acc, out pinNum, out balance, out firstName, out lastName, out img);
-                if ((searchText.ToUpper().Equals(firstName.ToUpper())) || (searchText.ToUpper().Equals(lastName.ToUpper())))
+                if (searchText.ToUpper().Equals(lastName.ToUpper()))
                 {
                     acctNo = acc;
                     pin = pinNum;
@@ -73,7 +73,7 @@ namespace BusinessTier
                     break;
                 }
             }
-            //Thread.Sleep(5000);
+            Thread.Sleep(1000);
         }
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessTier", "BusinessTier\BusinessTier.csproj", "{445A6122-8DDE-47CB-AFFB-3687D48AE74E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncClient", "AsyncClient\AsyncClient.csproj", "{D2429E81-2D1C-4CD9-98A5-2D3FA57D7287}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{445A6122-8DDE-47CB-AFFB-3687D48AE74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{445A6122-8DDE-47CB-AFFB-3687D48AE74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{445A6122-8DDE-47CB-AFFB-3687D48AE74E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2429E81-2D1C-4CD9-98A5-2D3FA57D7287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2429E81-2D1C-4CD9-98A5-2D3FA57D7287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2429E81-2D1C-4CD9-98A5-2D3FA57D7287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2429E81-2D1C-4CD9-98A5-2D3FA57D7287}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
