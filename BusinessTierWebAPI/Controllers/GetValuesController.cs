@@ -11,8 +11,8 @@ namespace BusinessTierWebAPI.Controllers
 {
     public class GetValuesController : ApiController
     {
-        DataServerConnection ds = new DataServerConnection();
-        DataIntermed dataIntermed = new DataIntermed();
+        private static DataServerConnection ds = new DataServerConnection();
+        private DataIntermed dataIntermed = new DataIntermed();
         public DataIntermed Get(int id)
         {
             ds.connection.GetValuesForEntry(id,out dataIntermed.acct, out dataIntermed.pin, out dataIntermed.bal, out dataIntermed.fname, out dataIntermed.lname, out dataIntermed.image);

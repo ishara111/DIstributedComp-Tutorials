@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RestSharp;
+using Newtonsoft.Json;
 
 namespace AsyncClient
 {
@@ -20,54 +22,51 @@ namespace AsyncClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        RestClient client;
+        string URL;
+        int totEntries;
         public MainWindow()
         {
             InitializeComponent();
-            //ChannelFactory<BusinessServerInterface> foobFactory;
-            //NetTcpBinding tcp = new NetTcpBinding();
-            ////Set the URL and create the connection!
-            //string URL = "net.tcp://localhost:8200/BusinessService";
-            //foobFactory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
-            //foob = foobFactory.CreateChannel();
-            ////Also, tell me how many entries are in the DB.
-            //indexBox.Text = foob.GetNumEntries().ToString();
+            URL = "https://localhost:44310/";
+            client = new RestClient(URL);
+            RestRequest request = new RestRequest("api/totalval");
+            RestResponse numOfThings = client.Get(request);
+            indexBox.Text = numOfThings.Content;
+            totEntries = Int32.Parse(indexBox.Text);
         }
 
         private void sButton_Click(object sender, RoutedEventArgs e)
         {
-            //int index = 0;
-            //int res = 0;
-            //if (!int.TryParse(indexBox.Text, out res))
-            //{
-            //    indexBox.Text = "incorrect";
-            //}
-            //else
-            //{
-            //    index = Int32.Parse(indexBox.Text);
+            int index = 0;
+            int res = 0;
+            if (!int.TryParse(indexBox.Text, out res))
+            {
+                indexBox.Text = "incorrect";
+            }
+            else
+            {
+                index = Int32.Parse(indexBox.Text);
 
-            //    //Console.WriteLine(int.TryParse(index.ToString(), out res));
-            //    if ((index > 0) && (index <= foob.GetNumEntries()))
-            //    {
-            //        string fName = "", lName = "", image = "";
-            //        int bal = 0;
-            //        uint acct = 0, pin = 0;
-            //        //On click, Get the index....
-            //        //index = Int32.Parse(indexBox.Text);
-            //        //Then, run our RPC function, using the out mode parameters...
-            //        foob.GetValuesForEntry(index, out acct, out pin, out bal, out fName, out lName, out image);
-            //        //And now, set the values in the GUI!
-            //        fNameBox.Text = fName;
-            //        lNameBox.Text = lName;
-            //        balanceBox.Text = bal.ToString("C");
-            //        accNoBox.Text = acct.ToString();
-            //        pinBox.Text = pin.ToString("D4");
-            //        imageBox.Source = new BitmapImage(new Uri(image));
-            //    }
-            //    else
-            //    {
-            //        indexBox.Text = "incorrect";
-            //    }
-            //}
+                //Console.WriteLine(int.TryParse(index.ToString(), out res));
+                if ((index > 0) && (index <= totEntries))
+                {
+                    RestRequest request = new RestRequest("api/getvalues/" + index.ToString());
+                    RestResponse resp = client.Get(request);
+                    APIClasses.DataIntermed dataIntermed = JsonConvert.DeserializeObject<APIClasses.DataIntermed>(resp.Content);
+
+                    fNameBox.Text = dataIntermed.fname;
+                    lNameBox.Text = dataIntermed.lname;
+                    balanceBox.Text = dataIntermed.bal.ToString("C");
+                    accNoBox.Text = dataIntermed.acct.ToString();
+                    pinBox.Text = dataIntermed.pin.ToString("D4");
+                    imageBox.Source = new BitmapImage(new Uri(dataIntermed.image));
+                }
+                else
+                {
+                    indexBox.Text = "incorrect";
+                }
+            }
         }
 
         private void nameSearch_button_Click(object sender, RoutedEventArgs e)

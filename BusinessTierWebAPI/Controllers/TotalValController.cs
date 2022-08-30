@@ -10,7 +10,7 @@ namespace BusinessTierWebAPI.Controllers
 {
     public class TotalValController : ApiController
     {
-        DataServerConnection ds = new DataServerConnection();
+        private static DataServerConnection ds = new DataServerConnection();
 
         //// GET api/values
         //public IEnumerable<string> Get()

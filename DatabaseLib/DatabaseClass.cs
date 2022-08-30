@@ -27,7 +27,7 @@ namespace DatabaseLib
                 DatabaseGen dbGen = new DatabaseGen();
                 dbGen.GetNextAccount(out data.pin, out data.acctNo, out data.firstName, out data.lastName, out data.balance, out data.image);
                 dataStruct.Add(data);
-                //Console.WriteLine(data.image);
+                //Console.WriteLine(data.firstName);
             }
         }
 

@@ -12,12 +12,13 @@ namespace BusinessTierWebAPI.Controllers
 {
     public class SearchController : ApiController
     {
-        DataServerConnection ds = new DataServerConnection();
+        private static DataServerConnection ds = new DataServerConnection();
+        private SearchImpl searchImpl = new SearchImpl(ds);
 
         public DataIntermed Post([FromBody] SearchData searchData)
         {
             DataIntermed data = new DataIntermed();
-            ds.FindValuesForSearch(searchData.searchStr, out data.acct, out data.pin, out data.bal, out data.fname, out data.lname, out data.image);
+            searchImpl.FindValuesForSearch(searchData.searchStr, out data.acct, out data.pin, out data.bal, out data.fname, out data.lname, out data.image);
             return data;
         }
     }
