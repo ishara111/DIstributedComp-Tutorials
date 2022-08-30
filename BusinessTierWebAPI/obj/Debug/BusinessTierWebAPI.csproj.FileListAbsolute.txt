@@ -83,3 +83,10 @@ D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\obj\Debug\Busine
 D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\obj\Debug\BusinessTierWebAPI.csproj.CopyComplete
 D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\obj\Debug\BusinessTierWebAPI.dll
 D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\obj\Debug\BusinessTierWebAPI.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\bin\DataServer.exe
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\bin\DatabaseLib.dll
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\bin\DataServer.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\bin\DataServer.exe.config
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\bin\DatabaseLib.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\bin\APIClasses.dll
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\BusinessTierWebAPI\bin\APIClasses.pdb
