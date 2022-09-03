@@ -1,0 +1,6 @@
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\APIClasses\bin\Debug\APIClasses.dll
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\APIClasses\bin\Debug\APIClasses.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\APIClasses\obj\Debug\APIClasses.csproj.AssemblyReference.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\APIClasses\obj\Debug\APIClasses.csproj.CoreCompileInputs.cache
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\APIClasses\obj\Debug\APIClasses.dll
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\APIClasses\obj\Debug\APIClasses.pdb
