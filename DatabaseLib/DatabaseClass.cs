@@ -21,7 +21,7 @@ namespace DatabaseLib
         private void addData()
         {
 
-            for (int i = 0; i < 100000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 DataStruct data = new DataStruct();
                 DatabaseGen dbGen = new DatabaseGen();

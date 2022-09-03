@@ -1,6 +1,0 @@
-D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\DatabaseLib\bin\Debug\DatabaseLib.dll
-D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\DatabaseLib\bin\Debug\DatabaseLib.pdb
-D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\DatabaseLib\obj\Debug\DatabaseLib.csproj.AssemblyReference.cache
-D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\DatabaseLib\obj\Debug\DatabaseLib.csproj.CoreCompileInputs.cache
-D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\DatabaseLib\obj\Debug\DatabaseLib.dll
-D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\DatabaseLib\obj\Debug\DatabaseLib.pdb
