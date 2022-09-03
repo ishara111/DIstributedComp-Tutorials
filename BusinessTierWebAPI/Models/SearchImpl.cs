@@ -8,10 +8,10 @@ namespace BusinessTierWebAPI.Models
 {
     public class SearchImpl
     {
-        DataServerConnection ds;
-        public SearchImpl(DataServerConnection con)
+        static DataServerConnection ds;
+        public SearchImpl()
         {
-            ds = con;
+            ds = new DataServerConnection();
         }
         public void FindValuesForSearch(string searchText, out uint acctNo, out uint pin, out int bal, out string fName, out string lName, out string image)
         {

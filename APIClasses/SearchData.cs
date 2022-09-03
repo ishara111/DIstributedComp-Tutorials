@@ -8,6 +8,6 @@ namespace APIClasses
 {
     public class SearchData
     {
-        public string searchStr;
+        public string searchStr { get; set; }
     }
 }

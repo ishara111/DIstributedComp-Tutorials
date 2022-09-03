@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RestSharp;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace AsyncClient
 {
@@ -25,6 +26,7 @@ namespace AsyncClient
         RestClient client;
         string URL;
         int totEntries;
+        int index = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,10 +38,10 @@ namespace AsyncClient
             totEntries = Int32.Parse(indexBox.Text);
         }
 
-        private void sButton_Click(object sender, RoutedEventArgs e)
+        private async void sButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = 0;
             int res = 0;
+            index = 0;
             if (!int.TryParse(indexBox.Text, out res))
             {
                 indexBox.Text = "incorrect";
@@ -51,9 +53,9 @@ namespace AsyncClient
                 //Console.WriteLine(int.TryParse(index.ToString(), out res));
                 if ((index > 0) && (index <= totEntries))
                 {
-                    RestRequest request = new RestRequest("api/getvalues/" + index.ToString());
-                    RestResponse resp = client.Get(request);
-                    APIClasses.DataIntermed dataIntermed = JsonConvert.DeserializeObject<APIClasses.DataIntermed>(resp.Content);
+                    Task<APIClasses.DataIntermed> task = new Task<APIClasses.DataIntermed>(SearchIndex);
+                    task.Start();
+                    APIClasses.DataIntermed dataIntermed = await task;
 
                     fNameBox.Text = dataIntermed.fname;
                     lNameBox.Text = dataIntermed.lname;
@@ -61,6 +63,7 @@ namespace AsyncClient
                     accNoBox.Text = dataIntermed.acct.ToString();
                     pinBox.Text = dataIntermed.pin.ToString("D4");
                     imageBox.Source = new BitmapImage(new Uri(dataIntermed.image));
+
                 }
                 else
                 {
@@ -71,7 +74,23 @@ namespace AsyncClient
 
         private void nameSearch_button_Click(object sender, RoutedEventArgs e)
         {
-            //searchval = name_search.Text;
+            //Make a search class
+            APIClasses.SearchData mySearch = new APIClasses.SearchData();
+            mySearch.searchStr = name_search.Text;
+            Console.WriteLine(mySearch.searchStr);
+            //Build a request with the json in the body
+            RestRequest request = new RestRequest("api/search/");
+            request.AddJsonBody(mySearch);
+            //Do the request
+            RestResponse resp = client.Post(request);
+            //Deserialize the result
+            APIClasses.DataIntermed dataIntermed = JsonConvert.DeserializeObject<APIClasses.DataIntermed>(resp.Content);
+            fNameBox.Text = dataIntermed.fname;
+            lNameBox.Text = dataIntermed.lname;
+            balanceBox.Text = dataIntermed.bal.ToString("C"); ;
+            accNoBox.Text = dataIntermed.acct.ToString();
+            pinBox.Text = dataIntermed.pin.ToString("D4");
+            imageBox.Source = new BitmapImage(new Uri(dataIntermed.image));
             //notFound = false;
             //int res;
             //Regex rgx = new Regex("[^A-Za-z0-9]");
@@ -87,6 +106,7 @@ namespace AsyncClient
             //        sButton.IsEnabled = false;
             //        nameSearch_button.IsEnabled = false;
             //        progress_bar.IsIndeterminate = true;
+
 
             //        Data data = await task;
 
@@ -148,5 +168,14 @@ namespace AsyncClient
     //        imageBox.Source = new BitmapImage(new Uri(data.img));
     //    }
     //}
+
+        private APIClasses.DataIntermed SearchIndex()
+        {
+            RestRequest request = new RestRequest("api/getvalues/" + index.ToString());
+            RestResponse resp = client.Get(request);
+            APIClasses.DataIntermed dataIntermed = JsonConvert.DeserializeObject<APIClasses.DataIntermed>(resp.Content);
+
+            return dataIntermed;
+        }
 }
 }
