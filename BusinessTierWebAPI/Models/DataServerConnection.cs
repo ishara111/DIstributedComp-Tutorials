@@ -14,6 +14,10 @@ namespace BusinessTierWebAPI.Models
 
         public DataServerConnection()
         {
+            Connection();
+        }
+        public void Connection()
+        {
             ChannelFactory<ServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
             //Set the URL and create the connection!

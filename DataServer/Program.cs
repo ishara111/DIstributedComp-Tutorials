@@ -7,9 +7,26 @@ using System.Threading.Tasks;
 
 namespace DataServer
 {
-    internal class Program
+    [ServiceContract]
+    interface IMyConnection
+    {
+        [OperationContract]
+        void Connection();
+    }
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    internal class Program : IMyConnection
     {
         static void Main(string[] args)
+        {
+            Program pr = new Program();
+            ServiceHost host = new ServiceHost(pr);
+            pr.Connection();
+            host.Open();
+
+            host.Close();
+        }
+
+        public void Connection()
         {
             //This should *definitely* be more descriptive.
             Console.WriteLine("hello welcome to the server");
