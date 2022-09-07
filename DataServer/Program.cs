@@ -7,35 +7,23 @@ using System.Threading.Tasks;
 
 namespace DataServer
 {
-    [ServiceContract]
-    interface IMyConnection
-    {
-        [OperationContract]
-        void Connection();
-    }
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    internal class Program : IMyConnection
+    internal class Program
     {
         static void Main(string[] args)
         {
-            Program pr = new Program();
-            ServiceHost host = new ServiceHost(pr);
-            pr.Connection();
-            host.Open();
-
-            host.Close();
-        }
-
-        public void Connection()
-        {
             //This should *definitely* be more descriptive.
             Console.WriteLine("hello welcome to the server");
+
+            DataServer dataServer = new DataServer();
             //This is the actual host service system
             ServiceHost host;
             //This represents a tcp/ip binding in the Windows network stack
             NetTcpBinding tcp = new NetTcpBinding();
             //Bind server to the implementation of DataServer
-            host = new ServiceHost(typeof(DataServer));
+            host = new ServiceHost(dataServer);
+
+            var action = host.Description.Behaviors.Find<ServiceBehaviorAttribute>();
+            action.InstanceContextMode = InstanceContextMode.Single;
             //Present the publicly accessible interface to the client. 0.0.0.0 tells .net to accept on any interface. :8100 means this will use port 8100. DataService is a name for theactual service, this can be any string.
 
             host.AddServiceEndpoint(typeof(ServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");

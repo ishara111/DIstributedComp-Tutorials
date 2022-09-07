@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataServer
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, UseSynchronizationContext = false)]
     internal class DataServer : ServerInterface
     {
         DatabaseClass db;
