@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using RestSharp;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace AsyncClient
 {
@@ -35,6 +36,7 @@ namespace AsyncClient
             RestRequest request = new RestRequest("api/totalval");
             RestResponse numOfThings = client.Get(request);
             indexBox.Text = numOfThings.Content;
+            urltext.Text = URL;
             totEntries = Int32.Parse(indexBox.Text);
         }
 
@@ -134,6 +136,42 @@ namespace AsyncClient
                 name_search.Text = "incorrect";
             }
         }
+        private void urlButton_Click(object sender, RoutedEventArgs e)
+        {
+            name_search.IsReadOnly = true;
+            indexBox.IsReadOnly = true;
+            sButton.IsEnabled = false;
+            nameSearch_button.IsEnabled = false;
+
+            SetUrl setUrl = new SetUrl(this);
+            setUrl.ShowDialog();
+            if (setUrl.valid)
+            {
+                urltext.Text = setUrl.GetURL();
+                URL = setUrl.GetURL();
+                if (CheckUrl())
+                {
+                    progress_bar.IsIndeterminate = true;
+
+
+                    client = new RestClient(URL);
+                    RestRequest request = new RestRequest("api/totalval");
+                    RestResponse numOfThings = client.Get(request);
+
+                    urltext.Text = URL;
+
+                    progress_bar.IsIndeterminate = false;
+                    name_search.IsReadOnly = false;
+                    indexBox.IsReadOnly = false;
+                    sButton.IsEnabled = true;
+                    nameSearch_button.IsEnabled = true;
+                }
+                else
+                {
+                    urltext.Text = "unable to connect";
+                }
+            }
+        }
 
 
         private APIClasses.DataIntermed SearchIndex()
@@ -159,6 +197,30 @@ namespace AsyncClient
             //Deserialize the result
             APIClasses.DataIntermed dataIntermed = JsonConvert.DeserializeObject<APIClasses.DataIntermed>(resp.Content);
             return dataIntermed;
+        }
+
+        public string GetURL()
+        {
+            return URL;
+        }
+
+        public bool CheckUrl()
+        {
+            bool up;
+            WebRequest request = WebRequest.Create(URL);
+            WebResponse res;
+            try
+            {
+                res = request.GetResponse();
+                up = true;
+                return up;
+            }
+            catch (WebException webEx)
+            {
+                MessageBox.Show(webEx.Message);
+                up = false;
+                return up;
+            }
         }
     }
 }

@@ -39,3 +39,5 @@ D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\AsyncClient\obj\Debug\AsyncClient.c
 D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\AsyncClient\obj\Debug\AsyncClient.csproj.CopyComplete
 D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\AsyncClient\obj\Debug\AsyncClient.exe
 D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\AsyncClient\obj\Debug\AsyncClient.pdb
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\AsyncClient\obj\Debug\SetUrl.g.cs
+D:\VISUAL STUDIO INSTALL\projects\Tutorial-4\AsyncClient\obj\Debug\SetUrl.baml
