@@ -28,7 +28,10 @@ namespace Authenticator
             authenticate.time = 180;
 
             cleartokens.Start();
-
+            authenticate.Register("one", "two");
+            authenticate.Register("two", "onw");
+            authenticate.Register("hello", "man");
+            Console.WriteLine(authenticate.Login("hello", "man"));
         }
 
         private static void Connect()
