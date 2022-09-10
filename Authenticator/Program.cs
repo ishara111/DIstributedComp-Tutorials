@@ -11,32 +11,32 @@ namespace Authenticator
     internal class Program
     {
         static Authenticate authenticate;
-        static Thread cleartokens;
+        static Thread connection,cleartokens;
         static void Main(string[] args)
         {
             authenticate = new Authenticate();
 
             Console.WriteLine("Authentication Server");
 
-            Thread connection = new Thread(Connect);
+            connection = new Thread(Connect);
             Thread clearMenu = new Thread(ClearMenu);
             
             connection.Start();
             Thread.Sleep(1000);
             clearMenu.Start();
 
-            authenticate.time = 1;
+            authenticate.time = 3;
 
 
-            //Console.WriteLine(authenticate.Login("two", "onw"));
-            //Console.WriteLine(authenticate.Register("one", "two"));
-            //Console.WriteLine(authenticate.Register("two", "onw"));
-            //Console.WriteLine(authenticate.Register("hello", "man"));
-            //Console.WriteLine(authenticate.Login("hello", "man"));
-            //Console.WriteLine(authenticate.Login("hs", "man"));
-            //Console.WriteLine(authenticate.Login("hello", "mn"));
-            //Console.WriteLine(authenticate.Login("two", "onw"));
-            //Console.WriteLine(authenticate.Validate(313569));
+            Console.WriteLine(authenticate.Login("two", "onw"));
+            Console.WriteLine(authenticate.Register("one", "two"));
+            Console.WriteLine(authenticate.Register("two", "onw"));
+            Console.WriteLine(authenticate.Register("hello", "man"));
+            Console.WriteLine(authenticate.Login("hello", "man"));
+            Console.WriteLine(authenticate.Login("hs", "man"));
+            Console.WriteLine(authenticate.Login("hello", "mn"));
+            Console.WriteLine(authenticate.Login("two", "onw"));
+            Console.WriteLine(authenticate.Validate(313569));
         }
 
         private static void Connect()
@@ -47,6 +47,7 @@ namespace Authenticator
             host.AddServiceEndpoint(typeof(AuthenticateInterface), tcp, "net.tcp://0.0.0.0:8100/AuthenticationService");
             host.Open();
             Console.WriteLine("Server Online");
+            connection.Join();
             host.Close();
         }
 
