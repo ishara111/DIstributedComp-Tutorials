@@ -11,10 +11,10 @@ namespace Authenticator
     public interface AuthenticateInterface
     {
         [OperationContract]
-        string Register(string name, string Password);
+        string Register(string name, string password);
 
         [OperationContract]
-        int Login(string name, string Password);
+        int Login(string name, string password);
 
         [OperationContract]
         string Validate(int token);

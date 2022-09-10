@@ -20,18 +20,23 @@ namespace Authenticator
 
             Thread connection = new Thread(Connect);
             Thread clearMenu = new Thread(ClearMenu);
-            cleartokens = new Thread(Clear);
+            
             connection.Start();
             Thread.Sleep(1000);
             clearMenu.Start();
 
-            authenticate.time = 180;
+            authenticate.time = 1;
 
-            cleartokens.Start();
-            authenticate.Register("one", "two");
-            authenticate.Register("two", "onw");
-            authenticate.Register("hello", "man");
-            Console.WriteLine(authenticate.Login("hello", "man"));
+
+            //Console.WriteLine(authenticate.Login("two", "onw"));
+            //Console.WriteLine(authenticate.Register("one", "two"));
+            //Console.WriteLine(authenticate.Register("two", "onw"));
+            //Console.WriteLine(authenticate.Register("hello", "man"));
+            //Console.WriteLine(authenticate.Login("hello", "man"));
+            //Console.WriteLine(authenticate.Login("hs", "man"));
+            //Console.WriteLine(authenticate.Login("hello", "mn"));
+            //Console.WriteLine(authenticate.Login("two", "onw"));
+            //Console.WriteLine(authenticate.Validate(313569));
         }
 
         private static void Connect()
@@ -47,17 +52,22 @@ namespace Authenticator
 
         private static void ClearMenu()
         {
+            cleartokens = new Thread(Clear);
+            cleartokens.Start();
             Console.WriteLine();
             Console.WriteLine("Default time Interval to delete tokens: 3 mins");
             while (true)
             {
                 int res;
                 Console.WriteLine();
-                Console.WriteLine("enter time interval to delete tokens in seconds");
+                Console.WriteLine("enter time interval to delete tokens in mins");
                 string time = Console.ReadLine();
                 if (int.TryParse(time,out res))
                 {
                     authenticate.time = int.Parse(time);
+                    cleartokens.Abort();
+                    cleartokens = new Thread(Clear);
+                    cleartokens.Start();
                 }
                 else
                 {

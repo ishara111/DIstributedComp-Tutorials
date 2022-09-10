@@ -10,16 +10,19 @@ namespace Authenticator
 {
     internal class Authenticate : AuthenticateInterface
     {
+        const string UserFile = "Users.txt";
+        const string TokenFile = "Tokens.txt";
         public int time { get; set; }
+        private static Random rnd = new Random();
 
-        public string Register(string name, string Password)
+        public string Register(string name, string password)
         {
-            if (!ReadFile(name,Password))
+            FileExists(UserFile);
+
+            if (!ReadUsers(name,password))
             {
-                using (StreamWriter w = new StreamWriter("Users.txt", true))
-                {
-                    w.WriteLine(name + "," + Password);
-                }
+                WriteUsers(name,password);
+
                 return "Successfully Registered";
             }
             else
@@ -30,9 +33,25 @@ namespace Authenticator
         }
         public int Login(string name, string password)
         {
-            if (ReadFile(name,password))
+            FileExists(UserFile);
+            if (ReadUsers(name,password))
             {
-                return 1234;
+                int token = GenerateToken();
+                FileExists(TokenFile);
+                if (!ReadTokens(token))
+                {
+                    WriteTokens(token);
+                }
+                else
+                {
+                    token = GenerateToken();
+                    while (ReadTokens(token))
+                    {
+                        token = GenerateToken();
+                    }
+                    WriteTokens(token);
+                }
+                return token;
             }
             else
             {
@@ -42,26 +61,81 @@ namespace Authenticator
 
         public string Validate(int token)
         {
-            throw new NotImplementedException();
+            if (ReadTokens(token))
+            {
+                return "Validated";
+            }
+            else
+            {
+                return "Not Validated";
+            }
         }
 
         internal void ClearTokens()
         {
-/*            while(true)
+            while (true)
             {
-                Console.WriteLine("cleared " + time);
-                Thread.Sleep(1000);
-            }*/
+                Thread.Sleep(time * 60000);
+
+                File.WriteAllText(TokenFile, string.Empty);
+
+                Console.WriteLine("cleared token file after " + time + " mins");
+            }
         }
 
-        private bool ReadFile(string name, string password)
+        private void FileExists(string filename)
+        {
+            if (!File.Exists(filename))
+            {
+                using (StreamWriter w = File.CreateText(filename)) { }
+            }
+        }
+
+        private int GenerateToken()
+        {
+            int token;
+            token = rnd.Next(100000, 999999);
+            return token;
+        }
+
+        private void WriteUsers(string name, string password)
+        {
+            using (StreamWriter w = new StreamWriter(UserFile, true))
+            {
+                w.WriteLine(name + "," + password);
+            }
+        }
+
+        private void WriteTokens(int token)
+        {
+            using (StreamWriter w = new StreamWriter(TokenFile, true))
+            {
+                w.WriteLine(token);
+            }
+        }
+
+        private bool ReadUsers(string name, string password)
         {
             bool found = false;
-            var f = File.ReadLines("Users.txt");
+            var f = File.ReadLines(UserFile);
             foreach (var l in f)
             {
                 string[] content = l.Split(',');
                 if (name.Equals(content[0]) && password.Equals(content[1]))
+                {
+                    found = true;
+                }
+            }
+            return found;
+        }
+
+        private bool ReadTokens(int token)
+        {
+            bool found = false;
+            var f = File.ReadLines(TokenFile);
+            foreach (var l in f)
+            {
+                if (token.Equals(int.Parse(l)))
                 {
                     found = true;
                 }
