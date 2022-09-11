@@ -19,7 +19,7 @@ namespace Registry.Controllers
         private string folder = HttpContext.Current.Server.MapPath("~/App_Data");
         private static List<Service> removeServices = new List<Service>();
 
-        public object Get(int token, string endpoint)
+        public object Delete(int token, string endpoint)
         {
             if (auth.authenticate.Validate(token).Equals("Validated"))
             {
