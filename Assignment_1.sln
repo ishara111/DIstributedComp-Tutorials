@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authenticator", "Authentica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceProvider", "ServiceProvider\ServiceProvider.csproj", "{A4EB18CB-D188-4E33-A450-752330438013}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registry", "Registry\Registry.csproj", "{8FA98B0E-58D7-4250-872E-CB37EFC410EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegistryClasses", "RegistryClasses\RegistryClasses.csproj", "{2EC92E20-EB2C-4413-AF58-A60BD5415088}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A4EB18CB-D188-4E33-A450-752330438013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4EB18CB-D188-4E33-A450-752330438013}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4EB18CB-D188-4E33-A450-752330438013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA98B0E-58D7-4250-872E-CB37EFC410EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA98B0E-58D7-4250-872E-CB37EFC410EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA98B0E-58D7-4250-872E-CB37EFC410EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA98B0E-58D7-4250-872E-CB37EFC410EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC92E20-EB2C-4413-AF58-A60BD5415088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC92E20-EB2C-4413-AF58-A60BD5415088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC92E20-EB2C-4413-AF58-A60BD5415088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC92E20-EB2C-4413-AF58-A60BD5415088}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
