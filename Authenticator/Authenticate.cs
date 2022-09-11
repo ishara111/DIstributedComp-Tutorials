@@ -142,5 +142,11 @@ namespace Authenticator
             }
             return found;
         }
+
+        public void InitTokenFile()
+        {
+            FileExists(TokenFile);
+            File.WriteAllText(TokenFile, string.Empty);
+        }
     }
 }

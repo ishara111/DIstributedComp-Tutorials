@@ -15,6 +15,7 @@ namespace Authenticator
         static void Main(string[] args)
         {
             authenticate = new Authenticate();
+            authenticate.InitTokenFile();
 
             Console.WriteLine("Authentication Server");
 
@@ -22,7 +23,7 @@ namespace Authenticator
             Thread clearMenu = new Thread(ClearMenu);
             
             connection.Start();
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             clearMenu.Start();
 
             authenticate.time = 3;
