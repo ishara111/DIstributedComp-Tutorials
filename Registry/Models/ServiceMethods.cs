@@ -111,7 +111,7 @@ namespace Registry.Models
                     return "endpoint not found";
                 }
 
-                return removeServices;
+                return "Service UnPublished Successfully";
             }
             else
             {

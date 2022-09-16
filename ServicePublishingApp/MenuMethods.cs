@@ -17,50 +17,127 @@ namespace ServicePublishingApp
 
         public void Register()
         {
-            Console.Write("Enter UserName: ");
+            Console.WriteLine();
+            Console.Write("     Enter UserName: ");
             string name = Console.ReadLine();
-            Console.Write("Enter Password: ");
+            Console.WriteLine();
+            Console.Write("     Enter Password: ");
             string password = Console.ReadLine();
-            Console.WriteLine(serviceMethods.Register(name, password));
+            Console.WriteLine();
+            Console.WriteLine("          "+serviceMethods.Register(name, password));
         }
 
         public int Login()
         {
-            Console.Write("Enter UserName: ");
+            Console.WriteLine();
+            Console.Write("     Enter UserName: ");
             string name = Console.ReadLine();
-            Console.Write("Enter Password: ");
+            Console.WriteLine();
+            Console.Write("     Enter Password: ");
             string password = Console.ReadLine();
             int token = serviceMethods.Login(name, password);
             if (token == 0)
             {
-                Console.WriteLine("Incorrect Username Or Password");
+                Console.WriteLine();
+                Console.WriteLine("          Incorrect Username Or Password");
+                Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("Logged in Successfully");
+                Console.WriteLine();
+                Console.WriteLine("          Logged in Successfully");
+                Console.WriteLine();
             }
             return token;
         }
 
-        public object Publish(Service service)
+        public void Publish()
         {
-            return null;
+            int numOps = 0;
+            int num;
+            bool notInt = false;
+            Console.WriteLine();
+            Console.Write("     Enter Service Name: ");
+            string name = Console.ReadLine();
+            Console.WriteLine();
+            Console.Write("     Enter Description: ");
+            string description = Console.ReadLine();
+            Console.WriteLine();
+            Console.Write("     Enter API Endpoint: ");
+            string endpoint = Console.ReadLine();
+            Console.WriteLine();
+            while (!notInt)
+            {
+                Console.Write("     Enter No Of Operands: ");
+                string inp = Console.ReadLine();
+                if (int.TryParse(inp,out num))
+                {
+                    numOps = num;
+                    notInt = true;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("     Input Must be Integer try Again");
+                }
+            }
+            //Console.Write("     Enter No Of Operands: ");
+            //string numOps = Console.ReadLine();
+            Console.WriteLine();
+            Console.Write("     Enter Operand Type: ");
+            string opType = Console.ReadLine();
+            Service service = new Service();
+            service.name = name;
+            service.description = description;
+            service.APIEndpoint = endpoint;
+            service.NoOfOperands = numOps;
+            service.operandType = opType;
+            object res = serviceMethods.Publish(service);
+            if (res.Equals("{\"status\":\"Denied\",\"reason\":\"Authentication Error\"}"))
+            {
+                Console.WriteLine();
+                Console.WriteLine("          Access Denied Pls Login First");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("          Service Published Successfully");
+                Console.WriteLine();
+            }
         }
 
         public void UnPublish()
         {
-            Console.Write("Enter endpoint: ");
+            Console.WriteLine();
+            Console.Write("     Enter API Endpoint: ");
             string endpoint = Console.ReadLine();
             object res = serviceMethods.UnPublish(endpoint);
-            Console.WriteLine(res);
+            if (res.Equals("{\"status\":\"Denied\",\"reason\":\"Authentication Error\"}"))
+            {
+                Console.WriteLine();
+                Console.WriteLine("          Access Denied Pls Login First");
+                Console.WriteLine();
+            }
+            else if(res.Equals("\"No services published\""))
+            {
+                Console.WriteLine();
+                Console.WriteLine("          No Services Published (publish first)");
+                Console.WriteLine();
+            }
+            else if (res.Equals("\"endpoint not found\""))
+            {
+                Console.WriteLine();
+                Console.WriteLine("          Entered Endpoint Not Found");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("          Service UnPublished Successfully");
+                Console.WriteLine();
+            }
         }
-
-
-
-        //TODO
-        //  fix unpublish api to show removed service
-        //  fix register to check if user only exists noth both user and pass
-        //  deserialize return obj or deserialise error obj depending on data type
 
     }
 }
