@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -15,24 +16,16 @@ namespace Registry.Controllers
     public class PublishController : ApiController
     {
         private static Authenticate auth = new Authenticate();
-        private static List<Service> list = new List<Service>();
+        private FileExists fe = new FileExists("/Services.txt");
+        private List<Service> list = new List<Service>();
         private string folder = HttpContext.Current.Server.MapPath("~/App_Data");
 
-        public object Post([FromUri] int token, [FromBody] Service service)
+        public IHttpActionResult Post([FromUri] int token, [FromBody] Service service)
         {
-            if (auth.authenticate.Validate(token).Equals("Validated"))
-            {
-                list.Add(service);
-                string json = JsonConvert.SerializeObject(list, Formatting.Indented);
-                File.WriteAllText(folder + "/Services.txt", json);
-
-                return "Successfully published";
-            }
-            else
-            {
-                Error error = new Error();
-                return error;
-            }
+            ServiceMethods services = new ServiceMethods(token,service,folder,list,auth);
+            Task<object> task = new Task<object>(services.Publish);
+            task.Start();
+            return Ok(task.Result);
         }
 
     }

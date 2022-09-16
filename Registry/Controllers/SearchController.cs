@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -19,36 +20,12 @@ namespace Registry.Controllers
         private string folder = HttpContext.Current.Server.MapPath("~/App_Data");
         private List<Service> foundServices = new List<Service>();
 
-        public object Get(int token,string search)
+        public IHttpActionResult Get(int token,string search)
         {
-            if (auth.authenticate.Validate(token).Equals("Validated"))
-            {
-                bool found = false;
-                var text = File.ReadAllText(folder + "/Services.txt");
-                List<Service> allServices = JsonConvert.DeserializeObject<List<Service>>(text);
-                if (allServices == null)
-                {
-                    return "No services published";
-                }
-                foreach (Service s in allServices)
-                {
-                    if (s.name.ToLower().Contains(search) || s.description.ToLower().Contains(search) || s.APIEndpoint.ToLower().Contains(search) || s.NoOfOperands.ToString().Equals(search) || s.operandType.ToLower().Contains(search))
-                    {
-                        foundServices.Add(s);
-                        found = true;
-                    }
-                }
-                if (found)
-                {
-                    return foundServices;
-                }
-                return "not found";
-            }
-            else
-            {
-                Error error = new Error();
-                return error;
-            }
+            ServiceMethods services = new ServiceMethods(token,search,folder,foundServices,auth);
+            Task<object> task = new Task<object>(services.Search);
+            task.Start();
+            return Ok(task.Result);
         }
     }
 }

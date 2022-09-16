@@ -27,17 +27,6 @@ namespace Authenticator
             clearMenu.Start();
 
             authenticate.time = 3;
-
-
-            Console.WriteLine(authenticate.Login("two", "onw"));
-            Console.WriteLine(authenticate.Register("one", "two"));
-            Console.WriteLine(authenticate.Register("two", "onw"));
-            Console.WriteLine(authenticate.Register("hello", "man"));
-            Console.WriteLine(authenticate.Login("hello", "man"));
-            Console.WriteLine(authenticate.Login("hs", "man"));
-            Console.WriteLine(authenticate.Login("hello", "mn"));
-            Console.WriteLine(authenticate.Login("two", "onw"));
-            Console.WriteLine(authenticate.Validate(313569));
         }
 
         private static void Connect()
@@ -60,13 +49,18 @@ namespace Authenticator
             Console.WriteLine("Default time Interval to delete tokens: 3 mins");
             while (true)
             {
-                int res;
+                //int res=0;
+                double res;
                 Console.WriteLine();
                 Console.WriteLine("enter time interval to delete tokens in mins");
                 string time = Console.ReadLine();
-                if (int.TryParse(time,out res))
+                if (double.TryParse(time,out res))
                 {
-                    authenticate.time = int.Parse(time);
+                    Console.WriteLine();
+                    Console.WriteLine("Time Set To: " + time + " mins / " + (res * 60) + " secs");
+
+                    authenticate.time = double.Parse(time);
+
                     cleartokens.Abort();
                     cleartokens = new Thread(Clear);
                     cleartokens.Start();

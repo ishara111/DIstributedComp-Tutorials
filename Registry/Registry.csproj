@@ -167,6 +167,7 @@
     <Compile Include="Models\Authenticate.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\FileExists.cs" />
+    <Compile Include="Models\ServiceMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

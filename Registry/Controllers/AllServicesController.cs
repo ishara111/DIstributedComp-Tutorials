@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -18,24 +19,12 @@ namespace Registry.Controllers
         private FileExists fe = new FileExists("/Services.txt");
         private string folder = HttpContext.Current.Server.MapPath("~/App_Data");
 
-        public object Get(int token)
+        public IHttpActionResult Get(int token)
         {
-            if (auth.authenticate.Validate(token).Equals("Validated"))
-            {
-                var text = File.ReadAllText(folder + "/Services.txt");
-                List<Service> list = JsonConvert.DeserializeObject<List<Service>>(text);
-                if (list == null)
-                {
-                    return "No services published";
-                }
-
-                return list;
-            }
-            else
-            {
-                Error error = new Error();
-                return error;
-            }
+            ServiceMethods services = new ServiceMethods(token,folder,auth);
+            Task<object> task = new Task<object>(services.AllServices);
+            task.Start();
+            return Ok(task.Result);
         }
     }
 }

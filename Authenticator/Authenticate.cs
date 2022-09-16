@@ -12,16 +12,27 @@ namespace Authenticator
     {
         const string UserFile = "Users.txt";
         const string TokenFile = "Tokens.txt";
-        public int time { get; set; }
+        string name, password;
+        int token;
+        public double time { get; set; }
         private static Random rnd = new Random();
 
         public string Register(string name, string password)
         {
+            this.name = name;
+            this.password = password;
+            Task<string> task = new Task<string>(AsyncRegister);
+            task.Start();
+            return task.Result;
+
+        }
+        private string AsyncRegister()
+        {
             FileExists(UserFile);
 
-            if (!ReadUsers(name,password))
+            if (!CheckUser(name))
             {
-                WriteUsers(name,password);
+                WriteUsers(name, password);
 
                 return "Successfully Registered";
             }
@@ -29,12 +40,20 @@ namespace Authenticator
             {
                 return "User already exists";
             }
-
         }
         public int Login(string name, string password)
         {
+            this.name = name;
+            this.password = password;
+            Task<int> task = new Task<int>(AsyncLogin);
+            task.Start();
+            return task.Result;
+        }
+
+        private int AsyncLogin()
+        {
             FileExists(UserFile);
-            if (ReadUsers(name,password))
+            if (CheckUserPass(name, password))
             {
                 int token = GenerateToken();
                 FileExists(TokenFile);
@@ -61,6 +80,14 @@ namespace Authenticator
 
         public string Validate(int token)
         {
+            this.token = token;
+            Task<string> task = new Task<string>(AsyncValidate);
+            task.Start();
+            return task.Result;
+        }
+
+        private string AsyncValidate()
+        {
             if (ReadTokens(token))
             {
                 return "Validated";
@@ -75,11 +102,11 @@ namespace Authenticator
         {
             while (true)
             {
-                Thread.Sleep(time * 60000);
+                Thread.Sleep((int)(time * 60000));
 
                 File.WriteAllText(TokenFile, string.Empty);
 
-                Console.WriteLine("cleared token file after " + time + " mins");
+                Console.WriteLine("cleared token file after " + time + " mins / " + (time * 60) + " secs");
             }
         }
 
@@ -114,7 +141,22 @@ namespace Authenticator
             }
         }
 
-        private bool ReadUsers(string name, string password)
+        private bool CheckUser(string name)
+        {
+            bool found = false;
+            var f = File.ReadLines(UserFile);
+            foreach (var l in f)
+            {
+                string[] content = l.Split(',');
+                if (name.Equals(content[0]))
+                {
+                    found = true;
+                }
+            }
+            return found;
+        }
+
+        private bool CheckUserPass(string name, string password)
         {
             bool found = false;
             var f = File.ReadLines(UserFile);

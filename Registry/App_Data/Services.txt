@@ -1,9 +1,1 @@
-[
-  {
-    "name": "gggg",
-    "description": "fucks",
-    "APIEndpoint": "https://localhost:44327/api/test/",
-    "NoOfOperands": 2,
-    "operandType": "integer"
-  }
-]
+[]

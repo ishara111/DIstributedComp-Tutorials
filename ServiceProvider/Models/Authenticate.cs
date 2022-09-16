@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ServiceProvider.Models
@@ -20,5 +21,6 @@ namespace ServiceProvider.Models
             foobFactory = new ChannelFactory<AuthenticateInterface>(tcp, URL);
             authenticate = foobFactory.CreateChannel();
         }
+
     }
 }
