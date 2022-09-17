@@ -130,7 +130,6 @@ namespace Client
                 MessageBox.Show("Search Cannot Be Empty");
             }
         }
-
         private List<Service> AsyncSearch()
         {
             List<Service> list = new List<Service>();
@@ -163,7 +162,8 @@ namespace Client
             if (listView.SelectedItem != null)
             {
                 Service s = (Service)listView.SelectedItem;
-                MessageBox.Show(s.APIEndpoint);
+                TestServiceWindow ts = new TestServiceWindow(s);
+                ts.Show();
             }
             else
             {
