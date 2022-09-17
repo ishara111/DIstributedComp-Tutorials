@@ -28,6 +28,7 @@ namespace Authenticator
         }
         private string AsyncRegister()
         {
+            Thread.Sleep(1000);
             FileExists(UserFile);
 
             if (!CheckUser(name))
@@ -52,6 +53,7 @@ namespace Authenticator
 
         private int AsyncLogin()
         {
+            Thread.Sleep(1000);
             FileExists(UserFile);
             if (CheckUserPass(name, password))
             {
@@ -88,6 +90,7 @@ namespace Authenticator
 
         private string AsyncValidate()
         {
+            Thread.Sleep(1000);
             if (ReadTokens(token))
             {
                 return "Validated";

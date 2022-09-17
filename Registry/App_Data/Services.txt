@@ -1,0 +1,16 @@
+[
+  {
+    "name": "hello",
+    "description": "ada",
+    "APIEndpoint": "",
+    "NoOfOperands": 26,
+    "operandType": "adad"
+  },
+  {
+    "name": "name",
+    "description": "desc",
+    "APIEndpoint": "end",
+    "NoOfOperands": 5,
+    "operandType": "322"
+  }
+]
