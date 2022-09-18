@@ -45,6 +45,8 @@ namespace Client
                 progress.IsIndeterminate = true;
                 register_btn.IsEnabled = false;
                 login_btn.IsEnabled = false;
+                username.IsEnabled = false;
+                password.IsEnabled = false;
 
 
                 user = username.Text;
@@ -56,6 +58,8 @@ namespace Client
                 progress.IsIndeterminate = false;
                 register_btn.IsEnabled = true;
                 login_btn.IsEnabled = true;
+                username.IsEnabled = true;
+                password.IsEnabled = true;
             }
             else
             {
@@ -84,6 +88,8 @@ namespace Client
                 progress.IsIndeterminate = true;
                 register_btn.IsEnabled = false;
                 login_btn.IsEnabled = false;
+                username.IsEnabled = false;
+                password.IsEnabled = false;
 
 
                 user = username.Text;
@@ -103,6 +109,8 @@ namespace Client
                 progress.IsIndeterminate = false;
                 register_btn.IsEnabled = true;
                 login_btn.IsEnabled = true;
+                username.IsEnabled = true;
+                password.IsEnabled = true;
             }
             else
             {

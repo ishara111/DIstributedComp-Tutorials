@@ -44,6 +44,7 @@ namespace Client
             showAll_btn.IsEnabled = false;
             search_btn.IsEnabled = false;
             test_btn.IsEnabled = false;
+            searchbox.IsEnabled = false;
 
             Task<List<Service>> task = new Task<List<Service>>(AsyncShowList);
             task.Start();
@@ -65,6 +66,7 @@ namespace Client
             showAll_btn.IsEnabled = true;
             search_btn.IsEnabled = true;
             test_btn.IsEnabled = true;
+            searchbox.IsEnabled = true;
         }
 
         private List<Service> AsyncShowList()
@@ -102,6 +104,7 @@ namespace Client
                 showAll_btn.IsEnabled = false;
                 search_btn.IsEnabled = false;
                 test_btn.IsEnabled = false;
+                searchbox.IsEnabled = false;
 
                 Task<List<Service>> task = new Task<List<Service>>(AsyncSearch);
                 task.Start();
@@ -123,6 +126,7 @@ namespace Client
                 showAll_btn.IsEnabled = true;
                 search_btn.IsEnabled = true;
                 test_btn.IsEnabled = true;
+                searchbox.IsEnabled = true;
 
             }
             else
@@ -162,8 +166,11 @@ namespace Client
             if (listView.SelectedItem != null)
             {
                 Service s = (Service)listView.SelectedItem;
-                TestServiceWindow ts = new TestServiceWindow(s);
-                ts.Show();
+                TestServiceWindow ts = new TestServiceWindow(s,token,this);
+                if (ts.close==false)
+                {
+                    ts.Show();
+                }
             }
             else
             {

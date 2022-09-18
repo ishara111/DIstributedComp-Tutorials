@@ -1,9 +1,16 @@
 [
   {
-    "name": "g",
-    "description": "gf",
-    "APIEndpoint": "g",
-    "NoOfOperands": 3,
-    "operandType": "5"
+    "name": "dd",
+    "description": "d",
+    "APIEndpoint": "https://localhost:44365/api/paka/",
+    "NoOfOperands": 2,
+    "operandType": ""
+  },
+  {
+    "name": "m",
+    "description": "dad",
+    "APIEndpoint": "https://localhost:44365/api/addtwonumbers/",
+    "NoOfOperands": 2,
+    "operandType": "dd"
   }
 ]
