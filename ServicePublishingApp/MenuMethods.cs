@@ -68,8 +68,23 @@ namespace ServicePublishingApp
             Console.Write("     Enter Description: ");
             string description = Console.ReadLine();
             Console.WriteLine();
-            Console.Write("     Enter API Endpoint: ");
-            string endpoint = Console.ReadLine();
+            bool validUrl = false;
+            string endpoint="";
+            while (!validUrl)
+            {
+                Console.WriteLine("     Example: https://localhost:44365/api/example/");
+                Console.Write("     Enter API Endpoint: ");
+                endpoint = Console.ReadLine();
+                if (ValidateUrl(endpoint))
+                {
+                    validUrl = true;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("     URL is invalid");
+                }
+            }
             Console.WriteLine();
             while (!notInt)
             {
@@ -140,6 +155,15 @@ namespace ServicePublishingApp
                 Console.WriteLine("          Service UnPublished Successfully");
                 Console.WriteLine();
             }
+        }
+
+
+        private bool ValidateUrl(string source)
+        {
+            Uri urlRes;
+            bool valid = Uri.TryCreate(source, UriKind.Absolute, out urlRes)
+                && (urlRes.Scheme == Uri.UriSchemeHttp || urlRes.Scheme == Uri.UriSchemeHttps);
+            return valid;
         }
 
     }

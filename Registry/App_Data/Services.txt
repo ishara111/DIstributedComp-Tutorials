@@ -1,0 +1,9 @@
+[
+  {
+    "name": "test",
+    "description": "test",
+    "APIEndpoint": "https://localhost:44365/api/addtwonumbers/",
+    "NoOfOperands": 2,
+    "operandType": "int"
+  }
+]
