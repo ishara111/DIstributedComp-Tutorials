@@ -1,4 +1,9 @@
-﻿using RegistryClasses;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: test service window
+ */
+using RegistryClasses;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -56,7 +61,7 @@ namespace Client
             }
 
             CreateTextBlocks();
-            GenerateTextBoxes(amount);
+            GenerateTextBoxes(amount); //dynamically creates componensta according to no of operands
             CreatePrgAndBtns();
 
         }
@@ -79,7 +84,7 @@ namespace Client
                     progress.IsIndeterminate = true;
                     ToggleTextBoxes(false);
 
-                    Task task = new Task(AsyncTest);
+                    Task task = new Task(AsyncTest); //runs test async
                     task.Start();
                     await task;
 

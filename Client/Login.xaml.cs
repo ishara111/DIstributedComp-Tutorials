@@ -1,4 +1,9 @@
-﻿using Authenticator;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: the login window
+ */
+using Authenticator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +56,7 @@ namespace Client
 
                 user = username.Text;
                 pass = password.Password;
-                Task task = new Task(AsyncRegister);
+                Task task = new Task(AsyncRegister); //calls register asynchronously
                 task.Start();
                 await task;
 
@@ -94,7 +99,7 @@ namespace Client
 
                 user = username.Text;
                 pass = password.Password;
-                Task<int> task = new Task<int>(AsyncLogin);
+                Task<int> task = new Task<int>(AsyncLogin);//calls login async
                 task.Start();
                 token = await task;
 

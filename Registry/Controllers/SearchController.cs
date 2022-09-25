@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: search controller
+ */
+using Newtonsoft.Json;
 using Registry.Models;
 using RegistryClasses;
 using System;
@@ -23,7 +28,7 @@ namespace Registry.Controllers
         public IHttpActionResult Get(int token,string search)
         {
             ServiceMethods services = new ServiceMethods(token,search,folder,foundServices,auth);
-            Task<object> task = new Task<object>(services.Search);
+            Task<object> task = new Task<object>(services.Search);//calls searcg asynchronosuly
             task.Start();
             return Ok(task.Result);
         }

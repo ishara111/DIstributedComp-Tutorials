@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: the service window 
+ */
+using Newtonsoft.Json;
 using RegistryClasses;
 using RestSharp;
 using System;
@@ -46,7 +51,7 @@ namespace Client
             test_btn.IsEnabled = false;
             searchbox.IsEnabled = false;
 
-            Task<List<Service>> task = new Task<List<Service>>(AsyncShowList);
+            Task<List<Service>> task = new Task<List<Service>>(AsyncShowList); //calls allservices async
             task.Start();
             List<Service> showList = await task;
 
@@ -106,7 +111,7 @@ namespace Client
                 test_btn.IsEnabled = false;
                 searchbox.IsEnabled = false;
 
-                Task<List<Service>> task = new Task<List<Service>>(AsyncSearch);
+                Task<List<Service>> task = new Task<List<Service>>(AsyncSearch); //calls search async
                 task.Start();
                 List<Service> showList = await task;
 
@@ -161,7 +166,7 @@ namespace Client
             return list;
         }
 
-        private void test_btn_Click(object sender, RoutedEventArgs e)
+        private void test_btn_Click(object sender, RoutedEventArgs e) //opens test service window
         {
             if (listView.SelectedItem != null)
             {

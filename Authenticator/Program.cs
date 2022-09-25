@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: main method of authenticator which creates the server and waits for user to give time to clear token list
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -19,7 +24,7 @@ namespace Authenticator
 
             Console.WriteLine("Authentication Server");
 
-            connection = new Thread(Connect);
+            connection = new Thread(Connect);  //creating 2 threads to host server and to clear tokens
             Thread clearMenu = new Thread(ClearMenu);
             
             connection.Start();
@@ -49,7 +54,6 @@ namespace Authenticator
             Console.WriteLine("Default time Interval to delete tokens: 3 mins");
             while (true)
             {
-                //int res=0;
                 double res;
                 Console.WriteLine();
                 Console.WriteLine("enter time interval to delete tokens in mins");
@@ -59,7 +63,7 @@ namespace Authenticator
                     Console.WriteLine();
                     Console.WriteLine("Time Set To: " + time + " mins / " + (res * 60) + " secs");
 
-                    authenticate.time = double.Parse(time);
+                    authenticate.time = double.Parse(time);  //recreating cleartoken thread to use new specified time to clear tokens
 
                     cleartokens.Abort();
                     cleartokens = new Thread(Clear);

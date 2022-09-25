@@ -1,4 +1,9 @@
-﻿using RestSharp;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: main method of publishing app
+ */
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +23,7 @@ namespace ServicePublishingApp
         public static void Main(string[] args)
         {
             token = 0;
-            //Console.WriteLine("Service Publishing App");
-            //Console.WriteLine();
-            //Console.WriteLine("Register[r] Login[l] Publish[p] UnPublish[u]");
+
             Connect();
             ShowMenu();
 
@@ -30,9 +33,7 @@ namespace ServicePublishingApp
         {
             string registryURL = "https://localhost:44327/";
             registry = new RestClient(registryURL);
-            //RestRequest request = new RestRequest("api/allservices?token=555");
-            //RestResponse numOfThings = registry.Get(request);
-            //Console.WriteLine(numOfThings.Content);
+
 
             ChannelFactory<AuthenticateInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();

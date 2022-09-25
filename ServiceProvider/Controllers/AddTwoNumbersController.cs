@@ -1,4 +1,9 @@
-﻿using ServiceProvider.Models;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: add2nums controller
+ */
+using ServiceProvider.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +20,7 @@ namespace ServiceProvider.Controllers
         public IHttpActionResult Get(int token,int num1,int num2)
         {
             ServiceMethods service = new ServiceMethods(token, num1, num2, 0, auth);
-            Task<object> task = new Task<object>(service.AddTwoNumbers);
+            Task<object> task = new Task<object>(service.AddTwoNumbers);//calls addtwonums asynchronously
             task.Start();
             return Ok(task.Result);
         }

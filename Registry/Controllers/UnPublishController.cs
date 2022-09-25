@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: unpublish controller
+ */
+using Newtonsoft.Json;
 using Registry.Models;
 using RegistryClasses;
 using System;
@@ -23,7 +28,7 @@ namespace Registry.Controllers
         public IHttpActionResult Delete(int token, string endpoint)
         {
             ServiceMethods services = new ServiceMethods(token,endpoint,removeServices,folder,auth);
-            Task<object> task = new Task<object>(services.UnPublish);
+            Task<object> task = new Task<object>(services.UnPublish); //calls unpublish asynchronously
             task.Start();
             return Ok(task.Result);
         }

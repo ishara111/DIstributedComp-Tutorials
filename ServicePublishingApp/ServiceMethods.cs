@@ -1,4 +1,9 @@
-﻿using Authenticator;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: used to send requests to apis or server
+ */
+using Authenticator;
 using RegistryClasses;
 using RestSharp;
 using System;

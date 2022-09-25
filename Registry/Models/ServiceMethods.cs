@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: contains all the service methods that will be called asynchronously through controller
+ */
+using Newtonsoft.Json;
 using RegistryClasses;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,9 @@
-﻿using Authenticator;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: used to connnect to authenticator
+ */
+using Authenticator;
 using System;
 using System.Collections.Generic;
 using System.Linq;

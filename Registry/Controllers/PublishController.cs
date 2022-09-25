@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: publish controller
+ */
+using Newtonsoft.Json;
 using Registry.Models;
 using RegistryClasses;
 using System;
@@ -23,7 +28,7 @@ namespace Registry.Controllers
         public IHttpActionResult Post([FromUri] int token, [FromBody] Service service)
         {
             ServiceMethods services = new ServiceMethods(token,service,folder,list,auth);
-            Task<object> task = new Task<object>(services.Publish);
+            Task<object> task = new Task<object>(services.Publish);//calls publish asynchronously
             task.Start();
             return Ok(task.Result);
         }

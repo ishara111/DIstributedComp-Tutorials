@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: contains all the methods for login register and validate and clearing token file
+ */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,7 +22,7 @@ namespace Authenticator
         public double time { get; set; }
         private static Random rnd = new Random();
 
-        public string Register(string name, string password)
+        public string Register(string name, string password)  //calls async register
         {
             this.name = name;
             this.password = password;
@@ -26,7 +31,7 @@ namespace Authenticator
             return task.Result;
 
         }
-        private string AsyncRegister()
+        private string AsyncRegister() //async register method
         {
             Thread.Sleep(1000);
             FileExists(UserFile);
@@ -42,7 +47,7 @@ namespace Authenticator
                 return "User already exists";
             }
         }
-        public int Login(string name, string password)
+        public int Login(string name, string password) //calls async login
         {
             this.name = name;
             this.password = password;
@@ -51,7 +56,7 @@ namespace Authenticator
             return task.Result;
         }
 
-        private int AsyncLogin()
+        private int AsyncLogin() //async login
         {
             Thread.Sleep(1000);
             FileExists(UserFile);
@@ -80,7 +85,7 @@ namespace Authenticator
             }
         }
 
-        public string Validate(int token)
+        public string Validate(int token) //calls async validate
         {
             this.token = token;
             Task<string> task = new Task<string>(AsyncValidate);
@@ -88,7 +93,7 @@ namespace Authenticator
             return task.Result;
         }
 
-        private string AsyncValidate()
+        private string AsyncValidate() //async validate
         {
             Thread.Sleep(1000);
             if (ReadTokens(token))
@@ -101,7 +106,7 @@ namespace Authenticator
             }
         }
 
-        internal void ClearTokens()
+        internal void ClearTokens()  //clears token file in given time
         {
             while (true)
             {

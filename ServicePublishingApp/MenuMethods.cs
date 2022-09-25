@@ -1,4 +1,9 @@
-﻿using RegistryClasses;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: conatins all methods called in menu selection that will use service methods to make requests
+ */
+using RegistryClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +20,7 @@ namespace ServicePublishingApp
             this.serviceMethods = serviceMethods;
         }
 
-        public void Register()
+        public void Register() //register
         {
             Console.WriteLine();
             Console.Write("     Enter UserName: ");
@@ -27,7 +32,7 @@ namespace ServicePublishingApp
             Console.WriteLine("          "+serviceMethods.Register(name, password));
         }
 
-        public int Login()
+        public int Login() //login
         {
             Console.WriteLine();
             Console.Write("     Enter UserName: ");
@@ -51,7 +56,7 @@ namespace ServicePublishingApp
             return token;
         }
 
-        public void Publish()
+        public void Publish()  //publish
         {
             int numOps = 0;
             int num;
@@ -81,8 +86,6 @@ namespace ServicePublishingApp
                     Console.WriteLine("     Input Must be Integer try Again");
                 }
             }
-            //Console.Write("     Enter No Of Operands: ");
-            //string numOps = Console.ReadLine();
             Console.WriteLine();
             Console.Write("     Enter Operand Type: ");
             string opType = Console.ReadLine();
@@ -107,7 +110,7 @@ namespace ServicePublishingApp
             }
         }
 
-        public void UnPublish()
+        public void UnPublish() //unpublsih
         {
             Console.WriteLine();
             Console.Write("     Enter API Endpoint: ");

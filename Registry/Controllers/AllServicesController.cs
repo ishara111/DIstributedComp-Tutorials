@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿/* Name: Ishara Gomes
+ * ID: 20534521
+ * 
+ * Description: allservices controller
+ */
+using Newtonsoft.Json;
 using Registry.Models;
 using RegistryClasses;
 using System;
@@ -22,7 +27,7 @@ namespace Registry.Controllers
         public IHttpActionResult Get(int token)
         {
             ServiceMethods services = new ServiceMethods(token,folder,auth);
-            Task<object> task = new Task<object>(services.AllServices);
+            Task<object> task = new Task<object>(services.AllServices);//calls allservices asynchronously
             task.Start();
             return Ok(task.Result);
         }
