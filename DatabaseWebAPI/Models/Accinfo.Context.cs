@@ -13,10 +13,10 @@ namespace DatabaseWebAPI.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DatabaseEntities : DbContext
+    public partial class DatabaseEntitiesNew : DbContext
     {
-        public DatabaseEntities()
-            : base("name=DatabaseEntities")
+        public DatabaseEntitiesNew()
+            : base("name=DatabaseEntitiesNew")
         {
         }
     

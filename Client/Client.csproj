@@ -129,5 +129,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessTierWebAPI\BusinessTierWebAPI.csproj">
+      <Project>{58274D7B-6549-497D-A355-CEF83A8E956A}</Project>
+      <Name>BusinessTierWebAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

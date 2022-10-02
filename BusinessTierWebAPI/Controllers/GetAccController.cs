@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BusinessTierWebAPI.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,30 +13,15 @@ namespace BusinessTierWebAPI.Controllers
     public class GetAccController : ApiController
     {
         // GET: api/GetAcc
-        public IEnumerable<string> Get()
+        public List<Accinfo> Get()
         {
-            return new string[] { "value1", "value2" };
-        }
+            RestClient restClient = new RestClient("https://localhost:44344/");
+            RestRequest restRequest = new RestRequest("api/accinfo", Method.Get);
+            // restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
+            RestResponse restResponse = restClient.Execute(restRequest);
+            List<Accinfo> accinfoList = JsonConvert.DeserializeObject<List<Accinfo>>(restResponse.Content);
 
-        // GET: api/GetAcc/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/GetAcc
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/GetAcc/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/GetAcc/5
-        public void Delete(int id)
-        {
+            return accinfoList;
         }
     }
 }

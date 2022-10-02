@@ -33,5 +33,15 @@ namespace BusinessTierWebAPI.Controllers
             return null;
         }
 
+        public Accinfo Get(int id)
+        {
+            RestClient restClient = new RestClient("https://localhost:44344/");
+            RestRequest restRequest = new RestRequest("api/accinfo/{id}", Method.Get);
+            restRequest.AddUrlSegment("id", id);
+            RestResponse restResponse = restClient.Execute(restRequest);
+            Accinfo data = JsonConvert.DeserializeObject<Accinfo>(restResponse.Content);
+            return data;
+        }
+
     }
 }

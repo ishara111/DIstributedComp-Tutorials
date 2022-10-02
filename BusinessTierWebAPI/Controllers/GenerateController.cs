@@ -39,7 +39,7 @@ namespace BusinessTierWebAPI.Controllers
                 RestResponse restResponse = restClient.Execute(restRequest);
             }
 
-            return (dataStruct.Count.ToString()+" generated");
+            return (dataStruct.Count.ToString()+" Accounts Generated");
         }
 
     }

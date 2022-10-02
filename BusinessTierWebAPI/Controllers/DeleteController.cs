@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BusinessTierWebAPI.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,31 +12,18 @@ namespace BusinessTierWebAPI.Controllers
 {
     public class DeleteController : ApiController
     {
-        // GET: api/Delete
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Delete/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Delete
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Delete/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
         // DELETE: api/Delete/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            RestClient restClient = new RestClient("https://localhost:44344/");
+
+            RestRequest restRequest = new RestRequest("api/accinfo/{id}", Method.Delete);
+            //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
+            restRequest.AddUrlSegment("id", id);
+            RestResponse restResponse = restClient.Execute(restRequest);
+
+            return Ok("Deleted");
         }
     }
 }

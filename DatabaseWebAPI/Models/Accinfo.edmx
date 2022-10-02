@@ -9,13 +9,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="fname" Type="varchar" MaxLength="255" />
           <Property Name="lname" Type="varchar" MaxLength="255" />
           <Property Name="accno" Type="int" />
           <Property Name="pin" Type="int" />
           <Property Name="balance" Type="money" />
-          <Property Name="image" Type="varbinary(max)" />
           <Property Name="imageurl" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityContainer Name="DatabaseModelStoreContainer">
@@ -36,10 +35,9 @@
           <Property Name="accno" Type="Int32" />
           <Property Name="pin" Type="Int32" />
           <Property Name="balance" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="imageurl" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DatabaseEntitiesNew" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accinfoes" EntityType="Self.Accinfo" />
         </EntityContainer>
       </Schema>
@@ -47,7 +45,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntitiesNew">
           <EntitySetMapping Name="Accinfoes">
             <EntityTypeMapping TypeName="DatabaseModel.Accinfo">
               <MappingFragment StoreEntitySet="Accinfo">
@@ -57,7 +55,6 @@
                 <ScalarProperty Name="accno" ColumnName="accno" />
                 <ScalarProperty Name="pin" ColumnName="pin" />
                 <ScalarProperty Name="balance" ColumnName="balance" />
-                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="imageurl" ColumnName="imageurl" />
               </MappingFragment>
             </EntityTypeMapping>

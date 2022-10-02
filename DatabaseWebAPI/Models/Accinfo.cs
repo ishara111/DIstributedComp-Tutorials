@@ -20,7 +20,6 @@ namespace DatabaseWebAPI.Models
         public Nullable<int> accno { get; set; }
         public Nullable<int> pin { get; set; }
         public Nullable<decimal> balance { get; set; }
-        public byte[] image { get; set; }
         public string imageurl { get; set; }
     }
 }

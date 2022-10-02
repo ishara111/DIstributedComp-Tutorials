@@ -14,7 +14,7 @@ namespace DatabaseWebAPI.Controllers
 {
     public class AccinfoController : ApiController
     {
-        private DatabaseEntities db = new DatabaseEntities();
+        private DatabaseEntitiesNew db = new DatabaseEntitiesNew();
 
         // GET: api/Accinfoes
         public IQueryable<Accinfo> GetAccinfoes()

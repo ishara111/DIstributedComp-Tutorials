@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BusinessTierWebAPI.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,31 +12,16 @@ namespace BusinessTierWebAPI.Controllers
 {
     public class InsertController : ApiController
     {
-        // GET: api/Insert
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Insert/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/Insert
-        public void Post([FromBody]string value)
+        public IHttpActionResult Post([FromBody]Accinfo data)
         {
-        }
+            RestClient restClient = new RestClient("https://localhost:44344/");
+            RestRequest restRequest = new RestRequest("api/accinfo", Method.Post);
+            restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
+            RestResponse restResponse = restClient.Execute(restRequest);
 
-        // PUT: api/Insert/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Insert/5
-        public void Delete(int id)
-        {
+            return Ok(restResponse.Content);
         }
     }
 }
