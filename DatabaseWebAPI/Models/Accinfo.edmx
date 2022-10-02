@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="fname" Type="varchar" MaxLength="255" />
           <Property Name="lname" Type="varchar" MaxLength="255" />
           <Property Name="accno" Type="int" />
@@ -30,7 +30,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="fname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="lname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="accno" Type="Int32" />

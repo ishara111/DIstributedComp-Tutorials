@@ -28,19 +28,19 @@ namespace BusinessTierWebAPI.Models
             return lastName;
         }
 
-        private uint GetPIN()
+        private int GetPIN()
         {
-            uint pin;
+            int pin;
             //Random rnd = new Random();
-            pin = (uint)rnd.Next(1000, 9999);
+            pin = rnd.Next(1000, 9999);
             return pin;
         }
 
-        private uint GetAcctNo()
+        private int GetAcctNo()
         {
-            uint acctNo;
+            int acctNo;
             //Random rnd = new Random();
-            acctNo = (uint)rnd.Next(100000000, 999999999);
+            acctNo = rnd.Next(100000000, 999999999);
             return acctNo;
         }
 
@@ -61,7 +61,20 @@ namespace BusinessTierWebAPI.Models
             return image;
         }
 
-        public void GetNextAccount(out uint pin, out uint acctNo, out string firstName, out string lastName, out int balance, out string image)
+        //public Accinfo GetNextAccount()
+        //{
+        //    Accinfo data = new Accinfo();
+        //    data.pin = GetPIN();
+        //    data.accno = GetAcctNo();
+        //    data.fname = GetFirstname();
+        //    data.lname = GetLastname();
+        //    data.balance = GetBalance();
+        //    data.imageurl = GetImage();
+
+        //    return data;
+        //}
+
+        public void GetNextAccount(out int pin, out int acctNo, out string firstName, out string lastName, out int balance, out string image)
         {
             pin = GetPIN();
             acctNo = GetAcctNo();
