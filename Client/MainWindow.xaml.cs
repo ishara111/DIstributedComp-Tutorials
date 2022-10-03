@@ -34,7 +34,7 @@ namespace Client
             InitializeComponent();
             restClient = new RestClient("https://localhost:44366/");
 
-            count_label.Content = "Acc Count: "+DBSize().ToString();
+            count_label.Content = "Acc Count: " + DBSize().ToString();
         }
 
         private async void gennerate_btn_Click(object sender, RoutedEventArgs e)
@@ -60,11 +60,11 @@ namespace Client
         {
             int res;
             decimal resd;
-            if (!String.IsNullOrEmpty(fNameBox.Text)&& !String.IsNullOrEmpty(lNameBox.Text)
-                && !String.IsNullOrEmpty(balanceBox.Text) && !String.IsNullOrEmpty(accNoBox.Text) && 
+            if (!String.IsNullOrEmpty(fNameBox.Text) && !String.IsNullOrEmpty(lNameBox.Text)
+                && !String.IsNullOrEmpty(balanceBox.Text) && !String.IsNullOrEmpty(accNoBox.Text) &&
                 !String.IsNullOrEmpty(pinBox.Text))
             {
-                if(int.TryParse(accNoBox.Text, out res) && int.TryParse(pinBox.Text, out res) 
+                if (int.TryParse(accNoBox.Text, out res) && int.TryParse(pinBox.Text, out res)
                     && decimal.TryParse(balanceBox.Text, out resd))
                 {
                     OpenFileDialog op = new OpenFileDialog();
@@ -79,7 +79,7 @@ namespace Client
 
                         data.fname = fNameBox.Text;
                         data.lname = lNameBox.Text;
-                        data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                        data.balance = Decimal.Parse(balanceBox.Text);
                         data.accno = int.Parse(accNoBox.Text);
                         data.pin = int.Parse(pinBox.Text);
                         data.imageurl = op.FileName;
@@ -124,7 +124,7 @@ namespace Client
                     && decimal.TryParse(balanceBox.Text, out resd))
                 {
 
-                    MessageBoxResult result = MessageBox.Show("Do you want to update image","Update", MessageBoxButton.YesNo);
+                    MessageBoxResult result = MessageBox.Show("Do you want to update image", "Update", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.Yes)
                     {
                         OpenFileDialog op = new OpenFileDialog();
@@ -138,9 +138,10 @@ namespace Client
                             data = new Accinfo();
                             //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
 
+                            data.Id = index;
                             data.fname = fNameBox.Text;
                             data.lname = lNameBox.Text;
-                            data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                            data.balance = Decimal.Parse(balanceBox.Text);
                             data.accno = int.Parse(accNoBox.Text);
                             data.pin = int.Parse(pinBox.Text);
                             data.imageurl = op.FileName.ToString();
@@ -158,9 +159,10 @@ namespace Client
                         data = new Accinfo();
                         //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
 
+                        data.Id = index;
                         data.fname = fNameBox.Text;
                         data.lname = lNameBox.Text;
-                        data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                        data.balance = Decimal.Parse(balanceBox.Text);
                         data.accno = int.Parse(accNoBox.Text);
                         data.pin = int.Parse(pinBox.Text);
                         data.imageurl = imageBox.Source.ToString();
@@ -193,7 +195,7 @@ namespace Client
             RestResponse resp = restClient.Post(request);
             //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
             //RestResponse restResponse = restClient.Execute(restRequest);
-            MessageBox.Show(resp.Content);
+            MessageBox.Show("Updated Account");
         }
 
         private async void delete_btn_Click(object sender, RoutedEventArgs e)
