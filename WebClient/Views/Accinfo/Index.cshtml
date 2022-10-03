@@ -1,0 +1,188 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div id="Accinfoform">
+    <img id="image" src="#" alt="Acc Image" style="float:right;width:42px;height:42px;">
+    <form>
+      <input type="number" id="Id" name="Id" placeholder="ID" />
+      <input type="text" id="fname" name="fname" placeholder="First Name" />
+      <input type="text" id="lname" name="lname" placeholder="Last Name" />
+      <input type="number" id="accno" name="accno" placeholder="Acccount Number" />
+      <input type="number" id="pin" name="pin" placeholder="PIN" />
+      <input type="number" id="balance" name="balance" placeholder="Balance" />
+            <input type="file" id="img" onchange="imgchange()"/>
+    </form>
+    <button id="generate" onclick="generate()">Generate</button>
+    <button id="insert" onclick="insert()">Insert</button>
+    <button id="update" onclick="update()">Update</button>
+    <button id="delete" onclick="del()">Delete</button>
+    <button id="searchid" onclick="searchid()">Search By Id</button>
+    <button id="searchname" onclick="searchname()">Search By Name</button>
+</div>
+  <script type="text/javascript">
+    document.getElementById("img").onchange = function(e) {
+      this.value;
+      const myArray = this.value.split("\\");
+        alert("added "+myArray[2]);
+    document.getElementById("image").src= "D:\VISUAL STUDIO INSTALL\projects\Tutorial-6\WebClient\wwwroot\images\\"+myArray[2];
+
+    }
+  </script>
+ <script>
+    function generate()
+    {
+        $.ajax({
+            type: 'POST',
+            url: '/accinfo/generate/',
+            contentType: 'application/json',
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Generated");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+
+    function insert() 
+    { 
+        $.ajax({
+            type: 'POST',
+            url: '/accinfo/insert/',
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "fname": $("#fname").val(),
+                "lname": $("#lname").val(),
+                "accno": $("#accno").val(),
+                "pin": $("#pin").val(),
+                "balance": $("#balance").val(),
+                "imageurl": $("#image").attr('src')
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Data Inserted");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+
+    function update() 
+    { 
+        $.ajax({
+            type: 'POST',
+            url: '/accinfo/update/'+ $('#Id').val(),
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "Id":$("#Id").val(),
+                "fname": $("#fname").val(),
+                "lname": $("#lname").val(),
+                "accno": $("#accno").val(),
+                "pin": $("#pin").val(),
+                "balance": $("#balance").val(),
+                "imageurl": $("#image").attr('src')
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Data Updated");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+
+    function del() 
+    { 
+        $.ajax({
+            type: 'DELETE',
+            url: '/accinfo/delete/'+ $('#Id').val(),
+            contentType: 'application/json',
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Data Deleted");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+
+    function searchid()
+    {
+        $.ajax({
+            url: '/Accinfo/searchid/'+ $('#Id').val(),
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) 
+            {
+                var obj = JSON.parse(data);
+                $("#Id").val(obj.Id);
+                $("#fname").val(obj.fname);
+                $("#lname").val(obj.lname);
+                $("#accno").val(obj.accno);
+                $("#pin").val(obj.pin);
+                $("#balance").val(obj.balance);
+                $("#image").attr('src',obj.imageurl);
+
+                alert("found");
+            },
+            error: function (jqXhr, textStatus, errorThrown) 
+            {
+                console.log(errorThrown);
+                alert("not found");
+            } 
+        });
+    }
+
+    function searchname()
+    {
+        $.ajax({
+            url: '/Accinfo/searchname?name='+ $('#lname').val(),
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) 
+            {
+                var obj = JSON.parse(data);
+                $("#Id").val(obj.Id);
+                $("#fname").val(obj.fname);
+                $("#lname").val(obj.lname);
+                $("#accno").val(obj.accno);
+                $("#pin").val(obj.pin);
+                $("#balance").val(obj.balance);
+                $("#image").attr('src',obj.imageurl);
+
+                alert("found");
+            },
+            error: function (jqXhr, textStatus, errorThrown) 
+            {
+                console.log(errorThrown);
+                alert("not found");
+            } 
+        });
+    }
+ </script>
