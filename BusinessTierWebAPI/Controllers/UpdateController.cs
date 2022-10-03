@@ -22,7 +22,7 @@ namespace BusinessTierWebAPI.Controllers
             //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
             //RestResponse restResponse = restClient.Execute(restRequest);
 
-            RestRequest request = new RestRequest("api/accinfo/" + data.Id.ToString());
+            RestRequest request = new RestRequest("api/accinfo/" + id.ToString());
             request.AddJsonBody(JsonConvert.SerializeObject(data));
             RestResponse resp = restClient.Put(request);
 

@@ -79,7 +79,7 @@ namespace Client
 
                         data.fname = fNameBox.Text;
                         data.lname = lNameBox.Text;
-                        data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                        data.balance = Decimal.Parse(balanceBox.Text);
                         data.accno = int.Parse(accNoBox.Text);
                         data.pin = int.Parse(pinBox.Text);
                         data.imageurl = op.FileName;
@@ -138,9 +138,10 @@ namespace Client
                             data = new Accinfo();
                             //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
 
+                            data.Id = index;
                             data.fname = fNameBox.Text;
                             data.lname = lNameBox.Text;
-                            data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                            data.balance = Decimal.Parse(balanceBox.Text);
                             data.accno = int.Parse(accNoBox.Text);
                             data.pin = int.Parse(pinBox.Text);
                             data.imageurl = op.FileName.ToString();
@@ -158,9 +159,10 @@ namespace Client
                         data = new Accinfo();
                         //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
 
+                        data.Id = index;
                         data.fname = fNameBox.Text;
                         data.lname = lNameBox.Text;
-                        data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                        data.balance = Decimal.Parse(balanceBox.Text);
                         data.accno = int.Parse(accNoBox.Text);
                         data.pin = int.Parse(pinBox.Text);
                         data.imageurl = imageBox.Source.ToString();
@@ -193,7 +195,7 @@ namespace Client
             RestResponse resp = restClient.Post(request);
             //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
             //RestResponse restResponse = restClient.Execute(restRequest);
-            MessageBox.Show(resp.Content);
+            MessageBox.Show("Updated Account");
         }
 
         private async void delete_btn_Click(object sender, RoutedEventArgs e)
