@@ -24,7 +24,7 @@ namespace BusinessTierWebAPI.Controllers
 
             foreach (Accinfo data in accinfoList)
             {
-                if(name.Contains(data.lname) || name.Contains(data.fname))
+                if(name.ToLower().Equals(data.lname.ToLower()) || name.ToLower().Equals(data.fname.ToLower()))
                 {
                     return data;
                 }

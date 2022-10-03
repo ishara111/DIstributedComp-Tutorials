@@ -17,11 +17,16 @@ namespace BusinessTierWebAPI.Controllers
         public IHttpActionResult Post(int id,[FromBody] Accinfo data)
         {
             RestClient restClient = new RestClient("https://localhost:44344/");
-            RestRequest restRequest = new RestRequest("api/accinfo/{id}", Method.Put);
-            restRequest.AddUrlSegment("id", id);
-            restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
-            RestResponse restResponse = restClient.Execute(restRequest);
-            return Ok(restResponse.Content);
+            //RestRequest restRequest = new RestRequest("api/accinfo/{id}", Method.Put);
+            //restRequest.AddUrlSegment("id", id);
+            //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
+            //RestResponse restResponse = restClient.Execute(restRequest);
+
+            RestRequest request = new RestRequest("api/accinfo/" + data.Id.ToString());
+            request.AddJsonBody(JsonConvert.SerializeObject(data));
+            RestResponse resp = restClient.Put(request);
+
+            return Ok(resp.Content);
         }
 
     }

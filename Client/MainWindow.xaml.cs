@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,115 +26,300 @@ namespace Client
     public partial class MainWindow : Window
     {
         RestClient restClient;
+        Accinfo data;
+        int index;
+        string name;
         public MainWindow()
         {
             InitializeComponent();
             restClient = new RestClient("https://localhost:44366/");
 
-            indexBox.Text = DBSize().ToString();
+            count_label.Content = "Acc Count: "+DBSize().ToString();
         }
 
-        private void gennerate_btn_Click(object sender, RoutedEventArgs e)
+        private async void gennerate_btn_Click(object sender, RoutedEventArgs e)
         {
-            
+            Task task = new Task(AsyncGen);
+            task.Start();
+            await task;
+
+
+            count_label.Content = "Acc Count: " + DBSize().ToString();
+
+        }
+
+        private void AsyncGen()
+        {
             RestRequest restRequest = new RestRequest("api/generate", Method.Post);
             //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
             RestResponse restResponse = restClient.Execute(restRequest);
-            MessageBox.Show(restResponse.Content);
-            indexBox.Text = DBSize().ToString();
-
+            MessageBox.Show(restResponse.Content.ToString());
         }
 
-        private void Insert_btn_Click(object sender, RoutedEventArgs e)
+        private async void Insert_btn_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Title = "Select Account Image";
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-              "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
+            int res;
+            decimal resd;
+            if (!String.IsNullOrEmpty(fNameBox.Text)&& !String.IsNullOrEmpty(lNameBox.Text)
+                && !String.IsNullOrEmpty(balanceBox.Text) && !String.IsNullOrEmpty(accNoBox.Text) && 
+                !String.IsNullOrEmpty(pinBox.Text))
             {
-                Accinfo data = new Accinfo();
-                //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
+                if(int.TryParse(accNoBox.Text, out res) && int.TryParse(pinBox.Text, out res) 
+                    && decimal.TryParse(balanceBox.Text, out resd))
+                {
+                    OpenFileDialog op = new OpenFileDialog();
+                    op.Title = "Select Account Image";
+                    op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                      "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                      "Portable Network Graphic (*.png)|*.png";
+                    if (op.ShowDialog() == true)
+                    {
+                        data = new Accinfo();
+                        //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
 
-                data.fname = fNameBox.Text;
-                data.lname = lNameBox.Text;
-                data.balance = Decimal.Parse(balanceBox.Text);
-                data.accno = int.Parse(accNoBox.Text);
-                data.pin = int.Parse(pinBox.Text);
-                data.imageurl = op.FileName;
+                        data.fname = fNameBox.Text;
+                        data.lname = lNameBox.Text;
+                        data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                        data.accno = int.Parse(accNoBox.Text);
+                        data.pin = int.Parse(pinBox.Text);
+                        data.imageurl = op.FileName;
 
-                RestRequest restRequest = new RestRequest("api/insert", Method.Post);
-                restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
-                RestResponse restResponse = restClient.Execute(restRequest);
-                MessageBox.Show(restResponse.Content);
+                        Task task = new Task(AsyncInsert);
+                        task.Start();
+                        await task;
 
-                indexBox.Text = DBSize().ToString();
-
-
+                        count_label.Content = "Acc Count: " + DBSize().ToString();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("input not in correct format");
+                }
             }
             else
             {
-                MessageBox.Show("Insert cancelled");
+                MessageBox.Show("input cannot be empty");
             }
 
         }
 
-        private void update_btn_Click(object sender, RoutedEventArgs e)
+        private void AsyncInsert()
         {
-            int index = int.Parse(indexBox.Text);
-            Accinfo data = new Accinfo();
-            //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
-
-            data.fname = fNameBox.Text;
-            data.lname = lNameBox.Text;
-            data.balance = Decimal.Parse(balanceBox.Text);
-            data.accno = int.Parse(accNoBox.Text);
-            data.pin = int.Parse(pinBox.Text);
-            data.imageurl = imageBox.Source.ToString();
-
-            RestRequest restRequest = new RestRequest("api/update/{id}", Method.Post);
-            restRequest.AddUrlSegment("id", index);
+            RestRequest restRequest = new RestRequest("api/insert", Method.Post);
             restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
             RestResponse restResponse = restClient.Execute(restRequest);
-            MessageBox.Show(restResponse.Content);
 
-            indexBox.Text = DBSize().ToString();
+            MessageBox.Show("Inserted");
         }
 
-        private void delete_btn_Click(object sender, RoutedEventArgs e)
+        private async void update_btn_Click(object sender, RoutedEventArgs e)
         {
-            int index = int.Parse(indexBox.Text);
+            int res;
+            decimal resd;
+            if (!String.IsNullOrEmpty(fNameBox.Text) && !String.IsNullOrEmpty(lNameBox.Text)
+                && !String.IsNullOrEmpty(balanceBox.Text) && !String.IsNullOrEmpty(accNoBox.Text) &&
+                !String.IsNullOrEmpty(pinBox.Text))
+            {
+                if (int.TryParse(accNoBox.Text, out res) && int.TryParse(pinBox.Text, out res)
+                    && decimal.TryParse(balanceBox.Text, out resd))
+                {
+
+                    MessageBoxResult result = MessageBox.Show("Do you want to update image","Update", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        OpenFileDialog op = new OpenFileDialog();
+                        op.Title = "Select Account Image";
+                        op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                          "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                          "Portable Network Graphic (*.png)|*.png";
+                        if (op.ShowDialog() == true)
+                        {
+                            index = int.Parse(indexBox.Text);
+                            data = new Accinfo();
+                            //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
+
+                            data.fname = fNameBox.Text;
+                            data.lname = lNameBox.Text;
+                            data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                            data.accno = int.Parse(accNoBox.Text);
+                            data.pin = int.Parse(pinBox.Text);
+                            data.imageurl = op.FileName.ToString();
+
+                            Task task = new Task(AsyncUpdate);
+                            task.Start();
+                            await task;
+
+                            count_label.Content = "Acc Count: " + DBSize().ToString();
+                        }
+                    }
+                    else if (result == MessageBoxResult.No)
+                    {
+                        index = int.Parse(indexBox.Text);
+                        data = new Accinfo();
+                        //imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
+
+                        data.fname = fNameBox.Text;
+                        data.lname = lNameBox.Text;
+                        data.balance = Decimal.Parse(balanceBox.Text.Remove(0, 1));
+                        data.accno = int.Parse(accNoBox.Text);
+                        data.pin = int.Parse(pinBox.Text);
+                        data.imageurl = imageBox.Source.ToString();
+
+                        Task task = new Task(AsyncUpdate);
+                        task.Start();
+                        await task;
+
+                        count_label.Content = "Acc Count: " + DBSize().ToString();
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("input not in correct format");
+                }
+            }
+            else
+            {
+                MessageBox.Show("input cannot be empty");
+            }
+        }
+
+        private void AsyncUpdate()
+        {
+            //RestRequest restRequest = new RestRequest("api/update/{id}", Method.Post);
+            //restRequest.AddUrlSegment("id", data.Id);
+            RestRequest request = new RestRequest("api/update/" + index.ToString());
+            request.AddJsonBody(JsonConvert.SerializeObject(data));
+            RestResponse resp = restClient.Post(request);
+            //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
+            //RestResponse restResponse = restClient.Execute(restRequest);
+            MessageBox.Show(resp.Content);
+        }
+
+        private async void delete_btn_Click(object sender, RoutedEventArgs e)
+        {
+            index = int.Parse(indexBox.Text);
+
+            Task task = new Task(AsyncDelete);
+            task.Start();
+            await task;
+
+            count_label.Content = "Acc Count: " + DBSize().ToString();
+
+        }
+
+        private void AsyncDelete()
+        {
             RestRequest restRequest = new RestRequest("api/delete/{id}", Method.Delete);
             //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
             restRequest.AddUrlSegment("id", index);
             RestResponse restResponse = restClient.Execute(restRequest);
-
-            indexBox.Text = DBSize().ToString();
-
         }
 
-        private void sButton_Click(object sender, RoutedEventArgs e)
+        private async void sButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = int.Parse(indexBox.Text);
+            int res = 0;
+            index = 0;
+            if (!int.TryParse(indexBox.Text, out res))
+            {
+                indexBox.Text = "incorrect";
+            }
+            else
+            {
+                index = Int32.Parse(indexBox.Text);
+
+                //Console.WriteLine(int.TryParse(index.ToString(), out res));
+                if ((index > 0) && (index <= DBSize()))
+                {
+                    index = int.Parse(indexBox.Text);
+
+                    Task<Accinfo> task = new Task<Accinfo>(AsyncSearchID);
+                    task.Start();
+                    data = await task;
+
+                    if (data != null)
+                    {
+                        fNameBox.Text = data.fname;
+                        lNameBox.Text = data.lname;
+                        balanceBox.Text = data.balance.ToString("C");
+                        accNoBox.Text = data.accno.ToString();
+                        pinBox.Text = data.pin.ToString("D4");
+                        imageBox.Source = new BitmapImage(new Uri(data.imageurl));
+                    }
+                    else
+                    {
+                        indexBox.Text = "not found";
+                        MessageBox.Show("Not found");
+                    }
+                    //MessageBox.Show(restResponse.Content);
+                }
+                else
+                {
+                    indexBox.Text = "incorrect";
+                }
+            }
+        }
+
+        private Accinfo AsyncSearchID()
+        {
             RestRequest restRequest = new RestRequest("api/search/{id}", Method.Get);
             //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
             restRequest.AddUrlSegment("id", index);
             RestResponse restResponse = restClient.Execute(restRequest);
-            Accinfo data = JsonConvert.DeserializeObject<Accinfo>(restResponse.Content);
-
-            fNameBox.Text = data.fname;
-            lNameBox.Text = data.lname;
-            balanceBox.Text = data.balance.ToString("C");
-            accNoBox.Text = data.accno.ToString();
-            pinBox.Text = data.pin.ToString("D4");
-            imageBox.Source = new BitmapImage(new Uri(data.imageurl));
-            MessageBox.Show(restResponse.Content);
+            data = JsonConvert.DeserializeObject<Accinfo>(restResponse.Content);
+            return data;
         }
 
-        private void nameSearch_button_Click(object sender, RoutedEventArgs e)
+        private async void nameSearch_button_Click(object sender, RoutedEventArgs e)
         {
+            int res;
+            Regex rgx = new Regex("[^A-Za-z0-9]");
+            if (!String.IsNullOrEmpty(name_search.Text))
+            {
+                if ((!int.TryParse(name_search.Text, out res)) && !(rgx.IsMatch(name_search.Text)))
+                {
+                    name = name_search.Text;
 
+                    Task<Accinfo> task = new Task<Accinfo>(AsyncSearchName);
+                    task.Start();
+                    data = await task;
+
+
+                    if (data != null)
+                    {
+                        fNameBox.Text = data.fname;
+                        lNameBox.Text = data.lname;
+                        balanceBox.Text = data.balance.ToString("C");
+                        accNoBox.Text = data.accno.ToString();
+                        pinBox.Text = data.pin.ToString("D4");
+                        imageBox.Source = new BitmapImage(new Uri(data.imageurl));
+                    }
+                    else
+                    {
+                        name_search.Text = "not found";
+                        MessageBox.Show("Not found");
+                    }
+
+                    //MessageBox.Show(restResponse.Content);
+                }
+                else
+                {
+                    name_search.Text = "incorrect";
+                }
+            }
+            else
+            {
+                name_search.Text = "incorrect";
+            }
+        }
+
+        private Accinfo AsyncSearchName()
+        {
+            RestRequest request = new RestRequest("api/search?name=" + name);
+            RestResponse resp = restClient.Get(request);
+            RestResponse restResponse = restClient.Execute(request);
+            data = JsonConvert.DeserializeObject<Accinfo>(restResponse.Content);
+            return data;
         }
 
 

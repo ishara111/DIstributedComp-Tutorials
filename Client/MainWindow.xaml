@@ -25,7 +25,7 @@
         <Button x:Name="update_btn" Content="Update" HorizontalAlignment="Left" Margin="101,199,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="update_btn_Click" />
         <Button x:Name="delete_btn" Content="Delete" HorizontalAlignment="Left" Margin="101,250,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="delete_btn_Click" />
         <Button x:Name="gennerate_btn" Content="Generate" HorizontalAlignment="Left" Margin="101,105,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="gennerate_btn_Click" />
-        <Label x:Name="id_label" Content="ID:" HorizontalAlignment="Left" Margin="546,42,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="count_label" Content="Acc Count:" HorizontalAlignment="Left" Margin="546,42,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
