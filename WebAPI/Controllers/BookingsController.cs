@@ -74,15 +74,25 @@ namespace WebAPI.Controllers
         [ResponseType(typeof(Booking))]
         public IHttpActionResult PostBooking(Booking booking)
         {
-            if (!ModelState.IsValid)
+            List<Booking> list = new List<Booking>(db.Bookings);
+            ControllerMethods overlap = new ControllerMethods(booking,list);
+            if (!overlap.IsBooked())
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                db.Bookings.Add(booking);
+                db.SaveChanges();
+
+                return CreatedAtRoute("DefaultApi", new { id = booking.Id }, booking);
+            }
+            else
+            {
+                return BadRequest("dates booked");
             }
 
-            db.Bookings.Add(booking);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = booking.Id }, booking);
         }
 
         // DELETE: api/Bookings/5
