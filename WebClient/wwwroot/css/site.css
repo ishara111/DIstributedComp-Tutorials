@@ -1,18 +1,60 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+}
+
+/*
+
+div#main {
+    background-color: grey;
+    height: 500px;
+}
+
+div#Accinfoform {
+    width: 300px;
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}*/
+div#loginBtn {
+    padding-top: 10px;
+    float: right;
+    color: white;
+}
+div#tablename {
+    padding-top: 10px;
+    margin-left: 10px;
+    margin-right: auto;
+    color: white;
+}
+
+div#centreTable {
+    width: 150px;
+    padding-top: 10px;
+    margin-left: 0px;
+    margin-right: auto;
+    overflow-y: scroll;
+    color:white;
+    height: 100px;
+}
+
+/*input {
+    display: block;
+    margin: 20px 20px 20px 20px;
+}*/
+
+button {
+    margin: 20px 20px 20px 20px;
+}
+
+/*div#footer {
+    background-color: lightcoral;
+    text-align: center;
+    height: 100px;
+}*/
+
+table, th, td {
+    border: 1px solid white;
+    text-align: center;
 }

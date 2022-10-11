@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
             }
             else
             {
-                return BadRequest("incorrect username or password");
+                return Ok("incorrect username or password");
             }
         }
 

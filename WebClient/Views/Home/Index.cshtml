@@ -2,4 +2,68 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @using WebClient.Models;
+    @model List<Centre>;
 }
+<script>
+var loggedIn = false;
+</script>
+<div id="loginBtn">
+    <button id="loginbutton" onclick="loginBtnClick(loggedIn)">Admin Login</button>
+</div>
+<div id="tablename" class="anonymous">
+    <h3>Centre Table</h3>
+</div>
+<div id="centreTable">
+    <table>
+
+        @foreach(var c in Model)
+        {
+            <tr>
+                <td>@c.centreName</td>
+            </tr>
+        }
+    </table>
+</div>
+<script>
+function loginBtnClick(l) {
+    if (l == false) {
+        let username = prompt("Enter Username");
+        let password = prompt("Enter Password");
+        login(username, password);
+    }
+    else {
+        loginbutton.textContent = 'Admin Login';
+        
+    }
+
+}
+
+    function login(user,pass) 
+    { 
+        var log = false;
+        $.ajax({
+            type: 'POST',
+            url: '/home/login?username='+user+'&password='+pass,
+            contentType: 'application/json',
+            success: function(data, textStatus, jQxhr)
+            {
+                log = true;
+                alert("logged in");
+                console.log(log);
+                changeBtn(log);
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("username or password incorrect");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+function changeBtn() {
+    loginbutton.textContent = 'Log Out';
+    loggedIn = true;
+}
+</script>
