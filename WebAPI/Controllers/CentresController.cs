@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
 {
     public class CentresController : ApiController
     {
-        private DatabaseEntities db = new DatabaseEntities();
+        private CentreEntities db = new CentreEntities();
 
         // GET: api/Centres
         public IQueryable<Centre> GetCentres()

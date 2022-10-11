@@ -4,30 +4,30 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CentreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Centres">
           <Key>
             <PropertyRef Name="centreId" />
           </Key>
           <Property Name="centreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="courseName" Type="varchar(max)" Nullable="false" />
+          <Property Name="centreName" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="DatabaseModelStoreContainer">
+        <EntityContainer Name="CentreModelStoreContainer">
           <EntitySet Name="Centres" EntityType="Self.Centres" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CentreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Centre">
           <Key>
             <PropertyRef Name="centreId" />
           </Key>
           <Property Name="centreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="courseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="centreName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CentreEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Centres" EntityType="Self.Centre" />
         </EntityContainer>
       </Schema>
@@ -35,12 +35,12 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="CentreModelStoreContainer" CdmEntityContainer="CentreEntities">
           <EntitySetMapping Name="Centres">
-            <EntityTypeMapping TypeName="DatabaseModel.Centre">
+            <EntityTypeMapping TypeName="CentreModel.Centre">
               <MappingFragment StoreEntitySet="Centres">
                 <ScalarProperty Name="centreId" ColumnName="centreId" />
-                <ScalarProperty Name="courseName" ColumnName="courseName" />
+                <ScalarProperty Name="centreName" ColumnName="centreName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

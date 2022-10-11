@@ -236,8 +236,8 @@
     </Content>
     <Content Include="Models\Centres.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Centres.Context.cs</LastGenOutput>
       <DependentUpon>Centres.edmx</DependentUpon>
+      <LastGenOutput>Centres.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Centres.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -265,19 +265,19 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\Centres.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Centres.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Centres.edmx.diagram">
-      <DependentUpon>Centres.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="Models\Bookings.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Bookings.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\Bookings.edmx.diagram">
       <DependentUpon>Bookings.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Centres.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Centres.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Centres.edmx.diagram">
+      <DependentUpon>Centres.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
