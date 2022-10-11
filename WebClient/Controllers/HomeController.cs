@@ -1,32 +1,79 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Newtonsoft.Json;
+using RestSharp;
 using WebClient.Models;
 
 namespace WebClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
+            ViewBag.Title = "Home";
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult Login(string username,string password)
         {
-            return View();
+            RestClient restClient = new RestClient("https://localhost:44363/");
+            RestRequest request = new RestRequest("api/login?username="+username+"&password="+password);
+            //restRequest.AddJsonBody(JsonConvert.SerializeObject(data));
+            RestResponse restResponse = restClient.Post(request);
+            if (restResponse.Content.Equals("logged in"))
+            {
+                return Ok(restResponse.Content);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult ShowAllCentres()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            RestClient restClient = new RestClient("https://localhost:44363/");
+            RestRequest request = new RestRequest("api/centres");
+            RestResponse resp = restClient.Get(request);
+            RestResponse restResponse = restClient.Execute(request);
+            List<Centre> centreList = JsonConvert.DeserializeObject<List<Centre>>(restResponse.Content);
+            return Ok(centreList);
+        }
+
+        [HttpGet]
+        public IActionResult GetCentreBookings(int centreId)
+        {
+            RestClient restClient = new RestClient("https://localhost:44363/");
+            RestRequest request = new RestRequest("api/CentreBookings/"+centreId);
+            RestResponse resp = restClient.Get(request);
+            RestResponse restResponse = restClient.Execute(request);
+            List<Booking> bookingList = JsonConvert.DeserializeObject<List<Booking>>(restResponse.Content);
+            if (bookingList.Count()>0)
+            {
+                return Ok(bookingList);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AddCentre([FromBody] Centre centre)
+        {
+            RestClient restClient = new RestClient("https://localhost:44363/");
+            RestRequest request = new RestRequest("api/centres");
+            request.AddJsonBody(JsonConvert.SerializeObject(centre));
+            RestResponse restResponse = restClient.Post(request);
+            if (restResponse.Content.Equals("logged in"))
+            {
+                return Ok(restResponse.Content);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
