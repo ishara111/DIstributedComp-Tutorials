@@ -22,8 +22,9 @@
         }
     </table>
 </div>
+
 <div id="addcentrebtn" class="admin">
-    <button id="addBtn" onclick="addCentre()">Add Centre</button>
+    <button id="addBtn" onclick="addCentre()" >Add Centre</button>
 </div>
 <script>
 console.log(sessionStorage.getItem("login"));
@@ -79,4 +80,30 @@ function changeBtn() {
     loginbutton.textContent = 'Log Out';
     loggedIn = true;
 }
+ function addCentre() 
+    { 
+        let name = prompt("Enter Centre Name");
+        $.ajax({
+            type: 'POST',
+            url: '/home/AddCentre/',
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "centreName": name
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Centre Added");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
 </script>
+
+
