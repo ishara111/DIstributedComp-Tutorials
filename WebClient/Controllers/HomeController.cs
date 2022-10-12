@@ -83,8 +83,8 @@ namespace WebClient.Controllers
         [HttpPost]
         public IActionResult Book([FromBody] Booking booking)
         {
-            DateTime now = DateTime.Now;
-            if (booking.startDate>now)
+            DateTime today = DateTime.Today;
+            if (booking.startDate>=today)
             {
                 RestClient restClient = new RestClient("https://localhost:44363/");
                 RestRequest request = new RestRequest("api/bookings");
