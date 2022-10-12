@@ -23,32 +23,49 @@
     </table>
 </div>
 
-<div id="addcentrebtn" class="admin">
+<div id="admin" class="admin">
     <button id="addBtn" onclick="addCentre()" >Add Centre</button>
 </div>
 <script>
-console.log(sessionStorage.getItem("login"));
 var loggedIn;
+    console.log(JSON.parse(sessionStorage.getItem("login")) === true);
 if (sessionStorage.getItem("login") != null) {
-    loggedIn = sessionStorage.getItem("login");
+    loggedIn = (JSON.parse(sessionStorage.getItem("login")) === true);
 
 }
 else {
     loggedIn = false;
 }
+console.log(loggedIn)
+if (loggedIn == true) {
+    var x = document.getElementById("admin");
+    x.style.display = "block";
+}
+else {
+    var x = document.getElementById("admin");
+    x.style.display = "none";
+}
+
 </script>
 <script>
 function loginBtnClick(l) {
     if (l == false) {
         let username = prompt("Enter Username");
         let password = prompt("Enter Password");
-        login(username, password);
+        if (username != "" && password != "") {
+            login(username, password);
+        }
+        else {
+            alert("username or password cannot be empty")
+        }
     }
     else {
         alert("Logged out");
         loginbutton.textContent = 'Login';
         loggedIn = false;
         sessionStorage.setItem("login",false);
+        var x = document.getElementById("admin");
+        x.style.display = "none";
     }
 }
 
@@ -63,9 +80,10 @@ function loginBtnClick(l) {
             {
                 log = true;
                 alert("logged in");
-                console.log(log);
                 sessionStorage.setItem("login",log);
                 changeBtn(log);
+                    var x = document.getElementById("admin");
+                    x.style.display = "block";
             },
             error: function(xhr, textStatus, error)
             {
@@ -83,26 +101,30 @@ function changeBtn() {
  function addCentre() 
     { 
         let name = prompt("Enter Centre Name");
-        $.ajax({
-            type: 'POST',
-            url: '/home/AddCentre/',
-            contentType: 'application/json',
-            data: JSON.stringify(
-            {
-                "centreName": name
-            }),
-            success: function(data, textStatus, jQxhr)
-            {
-                alert("Centre Added");
-            },
-            error: function(xhr, textStatus, error)
-            {
-                alert("Error");
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
-            }
-        });
+     if (name != "") {
+         $.ajax({
+             type: 'POST',
+             url: '/home/AddCentre/',
+             contentType: 'application/json',
+             data: JSON.stringify(
+                 {
+                     "centreName": name
+                 }),
+             success: function(data, textStatus, jQxhr) {
+                 alert("Centre Added");
+                 location.reload();
+             },
+             error: function(xhr, textStatus, error) {
+                 alert("Error");
+                 console.log(xhr.statusText);
+                 console.log(textStatus);
+                 console.log(error);
+             }
+         });
+     }
+     else {
+         alert("name cannot be empty");
+     }
     }
 </script>
 
