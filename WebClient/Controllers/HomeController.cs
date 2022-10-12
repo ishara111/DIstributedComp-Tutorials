@@ -83,18 +83,27 @@ namespace WebClient.Controllers
         [HttpPost]
         public IActionResult Book([FromBody] Booking booking)
         {
-            RestClient restClient = new RestClient("https://localhost:44363/");
-            RestRequest request = new RestRequest("api/bookings");
-            request.AddJsonBody(JsonConvert.SerializeObject(booking));
-            try
+            DateTime now = DateTime.Now;
+            if (booking.startDate>now)
             {
-                RestResponse restResponse = restClient.Post(request);
-                return Ok();
+                RestClient restClient = new RestClient("https://localhost:44363/");
+                RestRequest request = new RestRequest("api/bookings");
+                request.AddJsonBody(JsonConvert.SerializeObject(booking));
+                try
+                {
+                    RestResponse restResponse = restClient.Post(request);
+                    return Ok();
+                }
+                catch (Exception e)
+                {
+                    return BadRequest();
+                }
             }
-            catch (Exception e)
+            else
             {
                 return BadRequest();
             }
+
 
 
         }
