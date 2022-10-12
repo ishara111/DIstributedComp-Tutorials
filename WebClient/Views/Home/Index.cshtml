@@ -5,11 +5,8 @@
     @using WebClient.Models;
     @model List<Centre>;
 }
-<script>
-var loggedIn = false;
-</script>
 <div id="loginBtn">
-    <button id="loginbutton" onclick="loginBtnClick(loggedIn)">Admin Login</button>
+    <button id="loginbutton" onclick="loginBtnClick(loggedIn)">Login/Logout</button>
 </div>
 <div id="tablename" class="anonymous">
     <h3>Centre Table</h3>
@@ -25,6 +22,20 @@ var loggedIn = false;
         }
     </table>
 </div>
+<div id="addcentrebtn" class="admin">
+    <button id="addBtn" onclick="addCentre()">Add Centre</button>
+</div>
+<script>
+console.log(sessionStorage.getItem("login"));
+var loggedIn;
+if (sessionStorage.getItem("login") != null) {
+    loggedIn = sessionStorage.getItem("login");
+
+}
+else {
+    loggedIn = false;
+}
+</script>
 <script>
 function loginBtnClick(l) {
     if (l == false) {
@@ -33,10 +44,11 @@ function loginBtnClick(l) {
         login(username, password);
     }
     else {
-        loginbutton.textContent = 'Admin Login';
-        
+        alert("Logged out");
+        loginbutton.textContent = 'Login';
+        loggedIn = false;
+        sessionStorage.setItem("login",false);
     }
-
 }
 
     function login(user,pass) 
@@ -51,6 +63,7 @@ function loginBtnClick(l) {
                 log = true;
                 alert("logged in");
                 console.log(log);
+                sessionStorage.setItem("login",log);
                 changeBtn(log);
             },
             error: function(xhr, textStatus, error)
