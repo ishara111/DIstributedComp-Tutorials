@@ -43,21 +43,31 @@ namespace WebClient.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCentreBookings(int centreId)
+        public string GetCentreBookings(int centreId)
         {
             RestClient restClient = new RestClient("https://localhost:44363/");
             RestRequest request = new RestRequest("api/CentreBookings/"+centreId);
             RestResponse resp = restClient.Get(request);
             RestResponse restResponse = restClient.Execute(request);
-            List<Booking> bookingList = JsonConvert.DeserializeObject<List<Booking>>(restResponse.Content);
-            if (bookingList.Count()>0)
+            if (restResponse.Content!=null || restResponse.Content!="")
             {
-                return Ok(bookingList);
+                List<Booking> bookingList = JsonConvert.DeserializeObject<List<Booking>>(restResponse.Content);
+                if (bookingList!=null)
+                {
+                    string s = "Name | Start Date | End Date \n";
+                    foreach (var b in bookingList)
+                    {
+                        DateTime sd = (DateTime)b.startDate;
+                        DateTime ed = (DateTime)b.endDate;
+                        s = s + ("" + b.name + " | " + sd.Date.ToString("dd/MM/yyyy") + " | " + ed.Date.ToString("dd/MM/yyyy") + "\n");
+                    }
+                    return s;
+                }
+                return "No bookings for centre";
+
             }
-            else
-            {
-                return NotFound();
-            }
+            return "No bookings for centre";
+
         }
 
         [HttpPost]
@@ -76,8 +86,51 @@ namespace WebClient.Controllers
             RestClient restClient = new RestClient("https://localhost:44363/");
             RestRequest request = new RestRequest("api/bookings");
             request.AddJsonBody(JsonConvert.SerializeObject(booking));
-            RestResponse restResponse = restClient.Post(request);
-            return Ok();
+            try
+            {
+                RestResponse restResponse = restClient.Post(request);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+
+
+        }
+
+        [HttpGet]
+        public string GetNextDate(int centreId)
+        {
+            RestClient restClient = new RestClient("https://localhost:44363/");
+            RestRequest request = new RestRequest("api/nextdate/" + centreId);
+            RestResponse resp = restClient.Get(request);
+            RestResponse restResponse = restClient.Execute(request);
+            if(restResponse.Content.ToString()!="")
+            {
+                DateTime date = JsonConvert.DeserializeObject<DateTime>(restResponse.Content);
+                return date.Date.ToString("dd/MM/yyyy");
+            }
+            return "Not found";
+        }
+
+        [HttpGet]
+        public string SearchCentre(string search)
+        {
+            RestClient restClient = new RestClient("https://localhost:44363/");
+            RestRequest request = new RestRequest("api/centres");
+            RestResponse resp = restClient.Get(request);
+            RestResponse restResponse = restClient.Execute(request);
+            List<Centre> centreList = JsonConvert.DeserializeObject<List<Centre>>(restResponse.Content);
+            
+            foreach (var c in centreList)
+            {
+                if(c.centreName.Contains(search))
+                {
+                    return c.centreName;
+                }
+            }
+            return "Not Found";
         }
     }
 }

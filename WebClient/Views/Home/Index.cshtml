@@ -6,10 +6,10 @@
     @model List<Centre>;
 }
 <div id="loginBtn">
-    <button id="loginbutton" onclick="loginBtnClick(loggedIn)">Login/Logout</button>
+    <button id="loginbutton" onclick="loginBtnClick(loggedIn)">Login</button>
 </div>
-<div id="tablename" class="anonymous">
-    <h3>Centre Table</h3>
+<div id="tablename">
+    <h3>Centres</h3>
 </div>
 <div id="centreTable">
     <table>
@@ -22,9 +22,39 @@
         }
     </table>
 </div>
+<div id="selector">
+        <label for="centres">Select Centre: </label>
+            <select id="centres" onchange="onSelect();" onfocus="this.selectedIndex = -1;">
+            <option value="-1">Select</option>
+            @foreach(var c in Model)
+            {
+                <option title="@c.centreId" value="@c.centreId">@c.centreName</option>
+            }
+        </select>
+    <script>
+        let selectedCentre;
+function onSelect() { 
+    let getValue = document.getElementById('centres').selectedOptions[0].value;
+    selectedCentre = parseInt(getValue);
+}
+    </script>
+</div>
 
 <div id="admin" class="admin">
+
     <button id="addBtn" onclick="addCentre()" >Add Centre</button>
+     <button id="showbookings" onclick="bookingsByCentre(selectedCentre)" >Show Bookings</button>
+</div>
+<div id="user" class="user">
+
+    <button id="searchCentre" onclick="search()" >Search For Centre</button>
+     <button id="nextDate" onclick="getnextdate(selectedCentre)" >Next Date</button>
+     <button id="book" onclick="book(selectedCentre)" >Book Centre</button>
+
+     <label for="starttime" style="color:white">Start Time: </label>
+      <input type="date" id="starttime" name="starttime" placeholder="Start Time" />
+      <label for="endtime" style="color:white">End Time: </label>
+      <input type="date" id="endtime" name="endtime" placeholder="End Time" />
 </div>
 <script>
 var loggedIn;
@@ -40,12 +70,19 @@ console.log(loggedIn)
 if (loggedIn == true) {
     var x = document.getElementById("admin");
     x.style.display = "block";
+    var y = document.getElementById("user");
+    y.style.display = "none";
+
+    loginbutton.textContent = 'Log out';
 }
 else {
     var x = document.getElementById("admin");
     x.style.display = "none";
-}
+    var y = document.getElementById("user");
+    y.style.display = "block";
 
+    loginbutton.textContent = 'Login';
+}
 </script>
 <script>
 function loginBtnClick(l) {
@@ -66,6 +103,8 @@ function loginBtnClick(l) {
         sessionStorage.setItem("login",false);
         var x = document.getElementById("admin");
         x.style.display = "none";
+        var y = document.getElementById("user");
+        y.style.display = "block";
     }
 }
 
@@ -84,6 +123,8 @@ function loginBtnClick(l) {
                 changeBtn(log);
                     var x = document.getElementById("admin");
                     x.style.display = "block";
+                    var y = document.getElementById("user");
+                    y.style.display = "none";
             },
             error: function(xhr, textStatus, error)
             {
@@ -126,6 +167,110 @@ function changeBtn() {
          alert("name cannot be empty");
      }
     }
+
+     function bookingsByCentre(centreId)
+    {
+        $.ajax({
+            url: '/home/GetCentreBookings?centreId='+ centreId,
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) 
+            {
+                alert(data);
+
+            },
+            error: function (jqXhr, textStatus, errorThrown) 
+            {
+                console.log(errorThrown);
+                alert("not found");
+            } 
+        });
+    }
+
+    function getnextdate(centreId)
+    {
+        $.ajax({
+            url: '/home/GetNextDate?centreId='+ centreId,
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) 
+            {
+                alert(data);
+
+            },
+            error: function (jqXhr, textStatus, errorThrown) 
+            {
+                console.log(errorThrown);
+                alert("not found");
+            } 
+        });
+    }
+
+
+    function search()
+    {
+        let search = prompt("enter search string");
+        if (search != "") {
+           $.ajax({
+                url: '/home/searchCentre?search='+ search,
+                type: 'get',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) 
+                {
+                    alert(data);
+
+                },
+                error: function (jqXhr, textStatus, errorThrown) 
+                {
+                    console.log(errorThrown);
+                    alert("not found");
+                } 
+            });
+
+        } 
+        else {
+            alert("input cannot be empty");
+        }
+    }
+
+    function book(centreId) 
+    { 
+        if (centreId != -1) {
+            let name = prompt("Enter your name");
+            if (name != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/home/book/',
+                    contentType: 'application/json',
+                    data: JSON.stringify(
+                        {
+                            "name": name,
+                            "startDate": $("#starttime").val(),
+                            "endDate": $("#endtime").val(),
+                            "centreId": centreId
+                        }),
+                    success: function(data, textStatus, jQxhr) {
+                        alert("Centre Booked");
+                    },
+                    error: function(xhr, textStatus, error) {
+                        alert("Dates already booked");
+                        console.log(xhr.statusText);
+                        console.log(textStatus);
+                        console.log(error);
+                    }
+                });
+            } else {
+                alert("name cannot be empty");
+            }
+        } else {
+            alert("select a centre");
+        }
+    }
+
+
 </script>
 
 
