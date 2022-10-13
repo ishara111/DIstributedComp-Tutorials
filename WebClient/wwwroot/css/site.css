@@ -4,25 +4,24 @@ body {
     background-color: black;
 }
 
-/*
-
-div#main {
-    background-color: grey;
-    height: 500px;
-}
-
-div#Accinfoform {
-    width: 300px;
-    padding-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-}*/
-div.admin{
+div.admin {
     display: none;
     color: white;
+    margin-left: 580px;
+    margin-right: auto;
 }
+div.user {
+    display: none;
+    color: white;
+    margin-left: 300px;
+    margin-right: auto;
+}
+
 div#selector {
     padding-top: 40px;
+    margin-left: 600px;
+    margin-right: auto;
+    padding-bottom:40px;
     color: white;
 }
 
@@ -33,7 +32,7 @@ div#loginBtn {
 }
 div#tablename {
     padding-top: 10px;
-    margin-left: 10px;
+    margin-left: 705px;
     margin-right: auto;
     color: white;
 }
@@ -41,27 +40,19 @@ div#tablename {
 div#centreTable {
     width: 150px;
     padding-top: 10px;
-    margin-left: 0px;
+    margin-left: auto;
     margin-right: auto;
     overflow-y: scroll;
     color:white;
-    height: 100px;
+    height: 150px;
 }
 
-/*input {
-    display: block;
-    margin: 20px 20px 20px 20px;
-}*/
 
 button {
     margin: 20px 20px 20px 20px;
 }
 
-/*div#footer {
-    background-color: lightcoral;
-    text-align: center;
-    height: 100px;
-}*/
+
 
 table, th, td {
     border: 1px solid white;

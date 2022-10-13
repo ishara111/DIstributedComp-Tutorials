@@ -9,7 +9,7 @@
     <button id="loginbutton" onclick="loginBtnClick(loggedIn)">Login</button>
 </div>
 <div id="tablename">
-    <h3>Centres</h3>
+    <h2>Centres</h2>
 </div>
 <div id="centreTable">
     <table>
@@ -239,6 +239,12 @@ function changeBtn() {
     function book(centreId) 
     { 
         if (centreId != -1) {
+            const sd= document.getElementById('starttime');
+            const ed= document.getElementById('endtime');
+            if (!sd.value || !ed.value) {
+                alert("date not selected");
+            } else {
+
             let name = prompt("Enter your name");
             if (name != "") {
                 $.ajax({
@@ -265,6 +271,9 @@ function changeBtn() {
             } else {
                 alert("name cannot be empty");
             }
+
+            }
+
         } else {
             alert("select a centre");
         }
