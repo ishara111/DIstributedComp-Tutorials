@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{12B53E09-9D6C-4D20-B57C-5419DD6E4882}</ProjectGuid>
+    <ProjectGuid>{88BB79BE-F94A-4D1C-830E-59BA3C05143F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Client</RootNamespace>
     <AssemblyName>Client</AssemblyName>
@@ -111,8 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClientModel.cs" />
-    <Compile Include="Networking.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="ServerImpl.cs" />
     <Compile Include="ServerInterface.cs" />
@@ -130,6 +129,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Networking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

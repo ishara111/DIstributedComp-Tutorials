@@ -13,5 +13,6 @@
         <TextBlock x:Name="portBox" HorizontalAlignment="Left" Margin="95,53,0,0" TextWrapping="Wrap" Text="Port: " VerticalAlignment="Top"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Center" Margin="0,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="fileBtn" Content="Add Job From File" HorizontalAlignment="Center" Margin="0,202,0,0" VerticalAlignment="Top" Click="fileBtn_Click"/>
+
     </Grid>
 </Window>

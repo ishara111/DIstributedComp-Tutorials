@@ -33,7 +33,7 @@ namespace Client
             InitializeComponent();
             port = GenPort();
             server = new Server(port);
-            networking = new Networking(server, ip, port);
+            networking = new Networking(server,ip,port);
 
             ipBox.Text = "IP: " + ip;
             portBox.Text = "Port: " + port;
@@ -77,7 +77,7 @@ namespace Client
 
         private void jobBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.Text != "")
+            if(textBox.Text!="")
             {
                 server.SetJob(textBox.Text);
                 MessageBox.Show("Job Added");

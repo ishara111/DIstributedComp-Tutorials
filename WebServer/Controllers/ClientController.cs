@@ -17,9 +17,10 @@ namespace WebServer.Controllers
         private DatabaseEntities db = new DatabaseEntities();
 
         // GET: api/Client
-        public IQueryable<Client> GetClients()
+        public List<Client> GetClients()
         {
-            return db.Clients;
+            var list = new List<Client>(db.Clients);
+            return list;
         }
 
         // GET: api/Client/5
