@@ -12,5 +12,9 @@ namespace Client
     {
         [OperationContract]
         bool HasJob();
+        [OperationContract]
+        string GetJob();
+        [OperationContract]
+        void SetSolution(object solution);
     }
 }

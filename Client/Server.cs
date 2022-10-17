@@ -11,6 +11,7 @@ namespace Client
     {
         private string job;
         private int port;
+        private object solution;
 
         public Server(int port)
         {
@@ -26,6 +27,10 @@ namespace Client
         public string GetJob()
         {
             return this.job;
+        }
+        public void SetSolution(object solution)
+        {
+            this.solution = solution;
         }
 
         public void StartServer()

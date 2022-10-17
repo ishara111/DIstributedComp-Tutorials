@@ -17,6 +17,11 @@ namespace Client
             this.server = server;
         }
 
+        public string GetJob()
+        {
+            return this.server.GetJob();
+        }
+
         public bool HasJob()
         {
             if (server.GetJob() != "")
@@ -24,6 +29,10 @@ namespace Client
                 return true;
             }
             return false;
+        }
+        public void SetSolution(object solution)
+        {
+            this.server.SetSolution(solution);
         }
     }
 }

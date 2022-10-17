@@ -18,6 +18,8 @@ namespace Client
         private ServerInterface connection;
         private Server server;
         private Random rnd;
+        private string job;
+        private object solution;
 
 
         public Networking(Server server, string ip, int port)
@@ -62,16 +64,19 @@ namespace Client
 
                     if (connection.HasJob() == true)
                     {
-
+                        DoJob();
                     }
-                    //now connection. check if has job if yes get job and do it and retun it
                 }
             }
         }
 
-        private Object DoJob()
+        private void DoJob()
         {
-            return null;
+            job = connection.GetJob();
+
+            //RUN OYTHON CODE
+
+            connection.SetSolution(solution);
         }
     }
 }
