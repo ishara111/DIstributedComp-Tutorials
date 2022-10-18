@@ -18,16 +18,20 @@ namespace Client
         private ServerInterface connection;
         private Server server;
         private Random rnd;
+        private MainWindow window;
         private string job;
         private object solution;
+        private int count;
 
 
-        public Networking(Server server, string ip, int port)
+        public Networking(MainWindow window, Server server, string ip, int port)
         {
+            this.window = window;
             this.server = server;
             this.ip = ip;
             this.port = port;
             rnd = new Random();
+            count = 0;
         }
         public void GetList()
         {
@@ -36,7 +40,7 @@ namespace Client
             RestResponse restResponse = restClient.Execute(restRequest);
             clients = JsonConvert.DeserializeObject<List<ClientModel>>(restResponse.Content);
 
-            clients = (List<ClientModel>)clients.OrderBy(client => rnd.Next()); //randomise clients list to make job taking fair
+            //clients = (List<ClientModel>)clients.OrderBy(client => rnd.Next()); //randomise clients list to make job taking fair
         }
 
         //public void SetIp(string ip)
@@ -53,18 +57,30 @@ namespace Client
         {
             foreach (ClientModel c in clients)
             {
-                if (c.ip.Equals(ip) && c.port.Equals(port))
+                //Console.WriteLine("ooooooooooooooooooooooooooooooooooooooooooooo");
+                if (c.ip!=ip && c.port!=port)
                 {
-                    ChannelFactory<ServerInterface> foobFactory;
-                    NetTcpBinding tcp = new NetTcpBinding();
-                    //Set the URL and create the connection!
-                    string URL = "net.tcp://" + ip + ":" + port + "/Server";
-                    foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
-                    connection = foobFactory.CreateChannel();
-
-                    if (connection.HasJob() == true)
+                    Console.WriteLine("HELLLLOL");
+                    try
                     {
-                        DoJob();
+                        ChannelFactory<ServerInterface> foobFactory;
+                        NetTcpBinding tcp = new NetTcpBinding();
+                        //Set the URL and create the connection!
+                        string URL = "net.tcp://" + c.ip + ":" + c.port + "/Server";
+                        foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
+                        connection = foobFactory.CreateChannel();
+
+                        Console.WriteLine("JOB FOR" + c.port);
+
+                        if (connection.HasJob() == true)
+                        {
+                            DoJob();
+                            Console.WriteLine("JOB FOR" + c.port);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
                     }
                 }
             }
@@ -77,6 +93,9 @@ namespace Client
             //RUN OYTHON CODE
 
             connection.SetSolution(solution);
+            count++;
+            window.SetJobsDone(count);
+            Console.WriteLine("J========================DONE");
         }
     }
 }

@@ -17,9 +17,10 @@ namespace WebServer.Controllers
         private DatabaseEntities1 db = new DatabaseEntities1();
 
         // GET: api/Jobstate
-        public IQueryable<Jobstate> GetJobstates()
+        public List<Jobstate> GetJobstates()
         {
-            return db.Jobstates;
+            var list = new List<Jobstate>(db.Jobstates);
+            return list;
         }
 
         // GET: api/Jobstate/5

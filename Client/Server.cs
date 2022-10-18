@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Client
@@ -33,7 +34,7 @@ namespace Client
             this.solution = solution;
         }
 
-        public void StartServer()
+        public void StartServer(Thread serverThread)
         {
             Console.WriteLine("hello welcome to the server");
 
@@ -53,7 +54,8 @@ namespace Client
             //And open the host for business!
             host.Open();
             Console.WriteLine("System Online");
-            Console.ReadLine();
+            serverThread.Join();
+            Console.WriteLine("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             //Don't forget to close the host after you're done!
             host.Close();
         }
