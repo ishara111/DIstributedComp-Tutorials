@@ -4,32 +4,32 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JobStateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="JobstateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Jobstate">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="state" Type="bit" Nullable="false" />
           <Property Name="clientId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="JobStateModelStoreContainer">
+        <EntityContainer Name="JobstateModelStoreContainer">
           <EntitySet Name="Jobstate" EntityType="Self.Jobstate" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="JobStateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="JobstateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Jobstate">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="state" Type="Boolean" Nullable="false" />
           <Property Name="clientId" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DatabaseEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Jobstates" EntityType="Self.Jobstate" />
         </EntityContainer>
       </Schema>
@@ -37,9 +37,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="JobStateModelStoreContainer" CdmEntityContainer="DatabaseEntities1">
+        <EntityContainerMapping StorageEntityContainer="JobstateModelStoreContainer" CdmEntityContainer="DatabaseEntities2">
           <EntitySetMapping Name="Jobstates">
-            <EntityTypeMapping TypeName="JobStateModel.Jobstate">
+            <EntityTypeMapping TypeName="JobstateModel.Jobstate">
               <MappingFragment StoreEntitySet="Jobstate">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="state" ColumnName="state" />

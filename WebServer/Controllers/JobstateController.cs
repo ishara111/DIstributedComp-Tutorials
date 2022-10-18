@@ -14,7 +14,7 @@ namespace WebServer.Controllers
 {
     public class JobstateController : ApiController
     {
-        private DatabaseEntities1 db = new DatabaseEntities1();
+        private DatabaseEntities2 db = new DatabaseEntities2();
 
         // GET: api/Jobstate
         public List<Jobstate> GetJobstates()

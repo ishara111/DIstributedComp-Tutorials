@@ -20,7 +20,7 @@ namespace Client
         private Random rnd;
         private MainWindow window;
         private string job;
-        private object solution;
+        private string solution;
         private int count;
 
 
@@ -58,7 +58,11 @@ namespace Client
             foreach (ClientModel c in clients)
             {
                 //Console.WriteLine("ooooooooooooooooooooooooooooooooooooooooooooo");
-                if (c.ip!=ip && c.port!=port)
+                if (c.ip.Equals(ip) && c.port.Equals(port))
+                {
+
+                }
+                else
                 {
                     Console.WriteLine("HELLLLOL");
                     try
@@ -74,8 +78,9 @@ namespace Client
 
                         if (connection.HasJob() == true)
                         {
+                            window.working = true;
+                            Console.WriteLine("Inside loop" + c.port);
                             DoJob();
-                            Console.WriteLine("JOB FOR" + c.port);
                         }
                     }
                     catch (Exception e)
@@ -91,10 +96,16 @@ namespace Client
             job = connection.GetJob();
 
             //RUN OYTHON CODE
+            solution = job;
 
-            connection.SetSolution(solution);
+            byte[] bytes = Encoding.UTF8.GetBytes(solution);
+            var encoded = Convert.ToBase64String(bytes);
+
+            connection.EndJob();
+            connection.SetSolution(encoded);
             count++;
             window.SetJobsDone(count);
+            window.working = false;
             Console.WriteLine("J========================DONE");
         }
     }

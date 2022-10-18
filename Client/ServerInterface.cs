@@ -15,6 +15,8 @@ namespace Client
         [OperationContract]
         string GetJob();
         [OperationContract]
-        void SetSolution(object solution);
+        void EndJob();
+        [OperationContract]
+        void SetSolution(string solution);
     }
 }

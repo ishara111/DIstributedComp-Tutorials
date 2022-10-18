@@ -17,6 +17,11 @@ namespace Client
             this.server = server;
         }
 
+        public void EndJob()
+        {
+            this.server.SetJob("");
+        }
+
         public string GetJob()
         {
             return this.server.GetJob();
@@ -30,7 +35,7 @@ namespace Client
             }
             return false;
         }
-        public void SetSolution(object solution)
+        public void SetSolution(string solution)
         {
             this.server.SetSolution(solution);
         }

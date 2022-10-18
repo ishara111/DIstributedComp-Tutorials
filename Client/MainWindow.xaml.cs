@@ -28,8 +28,9 @@ namespace Client
         private string ip = "localhost";
         private int port;
         private int jobsDone;
-        private bool working;
+        public bool working;
         private int clientID,jobID;
+        private string solution;
         private static Server server;
         private static Networking networking;
         private static Random rnd = new Random();
@@ -39,6 +40,7 @@ namespace Client
         {
             InitializeComponent();
             db = new RestClient("https://localhost:44379/");
+            solution = "";
             jobsDone = 0;
             working = false;
             clientID = 0;
@@ -47,7 +49,7 @@ namespace Client
 
             AddClientToDb();
 
-            server = new Server(port);
+            server = new Server(this,port);
             networking = new Networking(this,server, ip, port);
 
             ipBox.Text = "IP: " + ip;
@@ -58,7 +60,10 @@ namespace Client
             serverThread.Start();
             networkThread.Start();
         }
-
+        public void SetSolution(string solution)
+        {
+            this.solution = solution;
+        }
         private void AddClientToDb()
         {
             ClientModel client = new ClientModel();
@@ -149,6 +154,8 @@ namespace Client
                 GetJobID();
 
                 MessageBox.Show("Job Added");
+
+                solutionText.Text = "Waiting For Solution";
             }
 
         }
@@ -169,10 +176,20 @@ namespace Client
                 GetJobID();
 
                 MessageBox.Show("Job Added");
+
+                solutionText.Text = "Waiting For Solution";
             }
             else
             {
                 MessageBox.Show("job cannot be empty");
+            }
+        }
+
+        private void solutionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!solution.Equals(""))
+            {
+                solutionText.Text = "Solution: " + solution;
             }
         }
 
@@ -183,11 +200,11 @@ namespace Client
 
         private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
-            RestRequest request = new RestRequest("api/client/" + clientID);
-            RestResponse resp = db.Delete(request);
-
             RestRequest request1 = new RestRequest("api/jobstate/" + jobID);
             RestResponse resp1 = db.Delete(request1);
+
+            RestRequest request = new RestRequest("api/client/" + clientID);
+            RestResponse resp = db.Delete(request);
 
             this.Close();
         }
