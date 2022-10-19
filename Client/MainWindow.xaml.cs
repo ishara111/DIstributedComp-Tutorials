@@ -251,14 +251,6 @@ namespace Client
             }
         }
 
-        private void solutionBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (!solution.Equals(""))
-            {
-                solutionText.Text = "Solution: " + solution;
-            }
-        }
-
         private void statusBtn_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Working On job: " + working + "\n\nJobs Completed: " + jobsDone);

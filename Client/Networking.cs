@@ -9,6 +9,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace Client
 {
@@ -84,6 +85,7 @@ namespace Client
 
         private void DoJob()
         {
+            Thread.Sleep(2000);
             job = connection.GetJob();
 
             using (SHA256 sha256Hash = SHA256.Create())
