@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Client
 {
@@ -19,7 +22,7 @@ namespace Client
         private Server server;
         private Random rnd;
         private MainWindow window;
-        private string job;
+        private DataModel job;
         private string solution;
         private int count;
 
@@ -40,31 +43,20 @@ namespace Client
             RestResponse restResponse = restClient.Execute(restRequest);
             clients = JsonConvert.DeserializeObject<List<ClientModel>>(restResponse.Content);
 
-            //clients = (List<ClientModel>)clients.OrderBy(client => rnd.Next()); //randomise clients list to make job taking fair
+            clients = clients.OrderBy(client => rnd.Next()).ToList(); //randomise clients list to make job taking fair
         }
 
-        //public void SetIp(string ip)
-        //{
-        //    this.ip = ip;
-        //}
-
-        //public void SetPort(int port)
-        //{
-        //    this.port = port;
-        //}
 
         public void FindJobs()
         {
             foreach (ClientModel c in clients)
             {
-                //Console.WriteLine("ooooooooooooooooooooooooooooooooooooooooooooo");
                 if (c.ip.Equals(ip) && c.port.Equals(port))
                 {
 
                 }
                 else
                 {
-                    Console.WriteLine("HELLLLOL");
                     try
                     {
                         ChannelFactory<ServerInterface> foobFactory;
@@ -74,12 +66,11 @@ namespace Client
                         foobFactory = new ChannelFactory<ServerInterface>(tcp, URL);
                         connection = foobFactory.CreateChannel();
 
-                        Console.WriteLine("JOB FOR" + c.port);
 
-                        if (connection.HasJob() == true)
+                        if (connection.HasJob() == true && connection.IsClaimed()==false)
                         {
                             window.working = true;
-                            Console.WriteLine("Inside loop" + c.port);
+                            connection.ClaimJob(true);
                             DoJob();
                         }
                     }
@@ -95,18 +86,45 @@ namespace Client
         {
             job = connection.GetJob();
 
-            //RUN OYTHON CODE
-            solution = job;
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] jobHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(job.encoded));
 
-            byte[] bytes = Encoding.UTF8.GetBytes(solution);
-            var encoded = Convert.ToBase64String(bytes);
+                if (jobHash.SequenceEqual(job.sha))
+                {
+                    var decodebytes = Convert.FromBase64String(job.encoded);
+                    var decoded = Encoding.UTF8.GetString(decodebytes);
 
-            connection.EndJob();
-            connection.SetSolution(encoded);
-            count++;
-            window.SetJobsDone(count);
-            window.working = false;
-            Console.WriteLine("J========================DONE");
+                    //RUN PYTHON CODE
+                    ScriptEngine engine = Python.CreateEngine();
+                    ScriptScope scope = engine.CreateScope();
+                    engine.Execute(decoded, scope);
+                    dynamic func = scope.GetVariable("func");
+                    object result = func();
+
+
+                    solution = result.ToString();
+                    byte[] bytes = Encoding.UTF8.GetBytes(solution);
+                    var encoded = Convert.ToBase64String(bytes);
+
+                    byte[] solutionHash = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(encoded));
+
+                    DataModel data = new DataModel();
+                    data.encoded = encoded;
+                    data.sha = solutionHash;
+
+                    connection.SetSolution(data);
+
+                    count++;
+                    window.SetJobsDone(count);
+                    window.working = false;
+                }
+                else
+                {
+                    connection.ClaimJob(false);
+                    window.working = false;
+                }
+            }
         }
     }
 }

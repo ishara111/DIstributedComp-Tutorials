@@ -16,5 +16,6 @@
         <Button x:Name="statusBtn" Content="Get Status" HorizontalAlignment="Left" Margin="507,174,0,0" VerticalAlignment="Top" Click="statusBtn_Click"/>
         <TextBlock x:Name="solutionText" HorizontalAlignment="Center" Margin="0,261,0,0" TextWrapping="Wrap" Text="Solution: " VerticalAlignment="Top" Height="59" Width="168"/>
         <Button x:Name="solutionBtn" Content="Check For Solution" HorizontalAlignment="Left" Margin="185,269,0,0" VerticalAlignment="Top" Click="solutionBtn_Click"/>
+        <ProgressBar x:Name="progressbar" HorizontalAlignment="Center" Height="10" Margin="0,349,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>

@@ -13,10 +13,12 @@ namespace Client
         [OperationContract]
         bool HasJob();
         [OperationContract]
-        string GetJob();
+        DataModel GetJob();
         [OperationContract]
-        void EndJob();
+        void ClaimJob(bool claim);
         [OperationContract]
-        void SetSolution(string solution);
+        bool IsClaimed();
+        [OperationContract]
+        void SetSolution(DataModel data);
     }
 }

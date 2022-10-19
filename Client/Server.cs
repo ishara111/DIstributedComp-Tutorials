@@ -12,7 +12,7 @@ namespace Client
     {
         private string job;
         private int port;
-        private object solution;
+        //private object solution;
         private MainWindow window;
 
         public Server(MainWindow window,int port)
@@ -33,9 +33,7 @@ namespace Client
         }
         public void SetSolution(string solution)
         {
-            var bytes = Convert.FromBase64String(solution);
-            var decoded = Encoding.UTF8.GetString(bytes);
-            this.window.SetSolution(decoded);
+            this.window.SetSolution(solution);
         }
 
         public void StartServer(Thread serverThread)

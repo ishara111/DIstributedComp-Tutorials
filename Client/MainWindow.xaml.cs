@@ -29,7 +29,8 @@ namespace Client
         private int port;
         private int jobsDone;
         public bool working;
-        private int clientID,jobID;
+        private int clientID;
+        private List<int> jobIDs;
         private string solution;
         private static Server server;
         private static Networking networking;
@@ -44,7 +45,7 @@ namespace Client
             jobsDone = 0;
             working = false;
             clientID = 0;
-            jobID = 0;
+            jobIDs = new List<int>();
             port = GenPort();
 
             AddClientToDb();
@@ -103,7 +104,7 @@ namespace Client
             {
                 if(j.clientId.Equals(clientID))
                 {
-                    this.jobID = j.Id;
+                    this.jobIDs.Add(j.Id);
                 }
             }
         }
@@ -134,7 +135,33 @@ namespace Client
             }
 
         }
-        private void fileBtn_Click(object sender, RoutedEventArgs e)
+        private async void fileBtn_Click(object sender, RoutedEventArgs e)
+        {
+            progressbar.IsIndeterminate = true;
+
+            Task task = new Task(AsyncAddJob);
+            task.Start();
+            await task;
+
+            GetJobID();
+
+            MessageBox.Show("Job Added");
+            progressbar.IsIndeterminate = false;
+
+            solutionText.Text = "Waiting For Solution";
+
+            progressbar.IsIndeterminate = true;
+
+            Task sol = new Task(WaitForSolution);
+            sol.Start();
+            await sol;
+
+            solutionText.Text = "Solution: "+solution;
+            progressbar.IsIndeterminate = false;
+
+
+        }
+        private void AsyncAddJob()
         {
             OpenFileDialog op = new OpenFileDialog();
             op.Title = "Select Python File";
@@ -151,13 +178,7 @@ namespace Client
                 RestRequest request = new RestRequest("api/jobstate");
                 request.AddJsonBody(jobstate);
                 RestResponse resp = db.Post(request);
-                GetJobID();
-
-                MessageBox.Show("Job Added");
-
-                solutionText.Text = "Waiting For Solution";
             }
-
         }
 
         private void jobBtn_Click(object sender, RoutedEventArgs e)
@@ -184,6 +205,31 @@ namespace Client
                 MessageBox.Show("job cannot be empty");
             }
         }
+        private void WaitForSolution()
+        {
+            bool wait = true;
+            int id = 0;
+            while (wait)
+            {
+                if(!solution.Equals(""))
+                {
+                    foreach (int jobid in jobIDs)
+                    {
+                        id = jobid;
+                    }
+                    wait = false;
+
+                    JobStateModel jobstate = new JobStateModel();
+                    jobstate.Id = id;
+                    jobstate.state = true;
+                    jobstate.clientId = this.clientID;
+
+                    RestRequest request = new RestRequest("api/jobstate/"+id.ToString());
+                    request.AddJsonBody(JsonConvert.SerializeObject(jobstate));
+                    RestResponse resp = db.Put(request);
+                }
+            }
+        }
 
         private void solutionBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -200,8 +246,11 @@ namespace Client
 
         private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
-            RestRequest request1 = new RestRequest("api/jobstate/" + jobID);
-            RestResponse resp1 = db.Delete(request1);
+            foreach (int jobid in jobIDs)
+            {
+                RestRequest request1 = new RestRequest("api/jobstate/" + jobid);
+                RestResponse resp1 = db.Delete(request1);
+            }
 
             RestRequest request = new RestRequest("api/client/" + clientID);
             RestResponse resp = db.Delete(request);
