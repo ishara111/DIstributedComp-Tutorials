@@ -181,7 +181,7 @@ namespace Client
             }
         }
 
-        private void jobBtn_Click(object sender, RoutedEventArgs e)
+        private async void jobBtn_Click(object sender, RoutedEventArgs e)
         {
             if (textBox.Text != "")
             {
@@ -199,6 +199,15 @@ namespace Client
                 MessageBox.Show("Job Added");
 
                 solutionText.Text = "Waiting For Solution";
+
+                progressbar.IsIndeterminate = true;
+
+                Task sol = new Task(WaitForSolution);
+                sol.Start();
+                await sol;
+
+                solutionText.Text = "Solution: " + solution;
+                progressbar.IsIndeterminate = false;
             }
             else
             {

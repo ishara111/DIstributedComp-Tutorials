@@ -118,6 +118,7 @@ namespace Client
                     count++;
                     window.SetJobsDone(count);
                     window.working = false;
+                    connection.ClaimJob(false);
                 }
                 else
                 {
