@@ -70,6 +70,7 @@ namespace Client
             ClientModel client = new ClientModel();
             client.ip = ip;
             client.port = port;
+            client.count = 0;
 
             RestRequest request = new RestRequest("api/client");
             request.AddJsonBody(client);
@@ -112,6 +113,16 @@ namespace Client
         public void SetJobsDone(int count)
         {
             this.jobsDone = count;
+
+            ClientModel client = new ClientModel();
+            client.Id = clientID;
+            client.ip = ip;
+            client.port = port;
+            client.count = count;
+
+            RestRequest request = new RestRequest("api/client/" + clientID.ToString());
+            request.AddJsonBody(JsonConvert.SerializeObject(client));
+            RestResponse resp = db.Put(request);
         }
 
         private int GenPort()

@@ -11,5 +11,6 @@ namespace Client
         public int Id { get; set; }
         public string ip { get; set; }
         public Nullable<int> port { get; set; }
+        public Nullable<int> count { get; set; }
     }
 }
